@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.member.model.mapper.MemberMapper">
+
+	<resultMap type="memberDto" id="member">
+		<result column="user_id" property="user_id" />
+		<result column="user_name" property="user_name" />
+		<result column="user_pwd" property="user_pwd" />
+		<result column="user_nick" property="user_nick" />
+		<result column="user_email" property="user_email" />
+	</resultMap>
+
+	<!-- Admin -->
+	<resultMap type="memberDto" id="memberAll" extends="member">
+		<result column="user_join_date" property="user_join_date" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<select id="idCheck" parameterType="String" resultType="int">
+		select
+		count(user_id)
+		from users
+		where user_id = #{user_id}
+	</select>
+
+	<insert id="joinUser" parameterType="memberDto">
+		insert into users
+		(user_name, user_id, user_pwd, user_nick, user_email, user_join_date, status)
+		values (#{user_name}, #{user_id}, #{user_pwd}, #{user_nick},
+		#{user_email}, now(), 'True')
+	</insert>
+
+	<select id="loginUser" parameterType="map" resultMap="member">
+		select
+		user_id, user_name, user_pwd, user_nick, user_email
+		from users
+		where
+		user_id = #{user_id} and user_pwd = #{user_pwd}
+	</select>
+
+	<!-- <select id="findPassword" parameterType="String" resultType="String"> 
+		select user_pwd from users where user_name = #{user_name} and user_id = #{user_id} 
+		</select> -->
+
+	<select id="listUser" resultMap="memberAll">
+		select user_name, user_id,
+		user_pwd, user_nick, user_email, user_join_date, status
+		from users
+		order by
+		user_join_date
+	</select>
+
+	<select id="getUser" parameterType="String" resultMap="memberAll">
+		select
+		user_id, user_name, user_pwd, user_nick, user_email, user_join_date, status
+		from users
+		where user_id = #{user_id}
+	</select>
+
+	<update id="updateUser" parameterType="memberDto">
+		update users
+		<trim prefix="set" suffixOverrides=",">
+			<if test="user_pwd != null">user_pwd = #{user_pwd},</if>
+			<if test="user_nick != null">user_nick = #{user_nick},</if>
+			<if test="user_email != null">user_email = #{user_email},</if>
+		</trim>
+		where user_id = #{user_id}
+	</update>
+
+	<delete id="deleteUser" parameterType="String">
+		delete from users
+		where
+		user_id = #{user_id}
+	</delete>
+</mapper>

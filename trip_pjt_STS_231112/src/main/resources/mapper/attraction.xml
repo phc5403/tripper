@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.model.mapper.AttractionMapper">
+
+	<!-- AttractionInfoDto -->
+	<select id="attractionList" parameterType="map"
+		resultType="AttractionInfoDto">
+		<if test="sido_code == 0">
+			select *
+			from attraction_info
+		</if>
+
+		<if test="sido_code != 0">
+			select *
+			from attraction_info
+			where
+			sido_code = ${sido_code}
+			and gugun_code = ${gugun_code}
+		</if>
+	</select>
+
+	<!-- [sido_code, content_id, title, param3, param1, param2] -->
+	<select id="searchByTitle" parameterType="hashMap"
+		resultType="AttractionInfoDto">
+		select *
+		from attraction_info
+		where title like concat('%', #{title}, '%')
+		and sido_code = ${sido_code} and content_type_id = ${content_id};
+	</select>
+</mapper>
