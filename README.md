@@ -10,7 +10,7 @@
 - 글 작성 시 ```BoardFormItem.vue```에 글번호 0으로 들고 가서 작성 안되는 문제.  
 
 ### Update, Delete
-- Front & Back 간의 URL, Login간의 차이로 인해 DB에 정상적으로 반영되지 않는 문제.  
+- Front & Back 간의 URL, Logig간의 차이로 인해 DB에 정상적으로 반영되지 않는 문제.  
 
 ## Trip - Map
 ### Map
