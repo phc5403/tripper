@@ -1,4 +1,4 @@
-package com.ssafy.member.model;
+package com.ssafy.user.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @ApiModel(value = "MemberDto (회원정보)", description = "아이디, 비밀번호, 이름을 가진 Domain Class")
-public class MemberDto {
+public class UserDto {
 	@ApiModelProperty(value = "회원아이디")
 	private String user_id;
 	

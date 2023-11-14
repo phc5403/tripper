@@ -1,4 +1,4 @@
-package com.ssafy.member.controller;
+package com.ssafy.user.controller;
 
 import java.util.*;
 
@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.member.model.MemberDto;
-import com.ssafy.member.model.service.MemberService;
+import com.ssafy.user.model.UserDto;
+import com.ssafy.user.model.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,38 +34,37 @@ import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.annotations.ApiIgnore;
 
+@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
-@RequestMapping("/member")
-@CrossOrigin("*")
+@RequestMapping("/user")
 @Api(tags = { "유저 컨트롤러 API" })
-@Slf4j
-public class MemberController {
+public class UserController {
 
-	private final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	private MemberService memberService;
+	private UserService userService;
 
 	@Autowired
-	public MemberController(MemberService memberService) {
+	public UserController(UserService userService) {
 		super();
-		this.memberService = memberService;
+		this.userService = userService;
 	}
 
 	@GetMapping("/{user_id}")
 	@ResponseBody
 	public String idCheck(@PathVariable("user_id") String user_id) throws Exception {
 		logger.debug("idCheck userid : {}", user_id);
-		int cnt = memberService.idCheck(user_id);
+		int cnt = userService.idCheck(user_id);
 		return cnt + "";
 	}
 
 	@ApiOperation(value = "회원가입", notes = "회원의 정보를 받아 처리.")
 	@PostMapping("/join")
-	public ResponseEntity<?> join(MemberDto memberDto, Model model) {
-		logger.debug("userDto info : {}", memberDto);
+	public ResponseEntity<?> join(UserDto userDto, Model model) {
+		logger.debug("userDto info : {}", userDto);
 		try {
-			memberService.joinUser(memberDto);
-			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+			userService.joinUser(userDto);
+			return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return exceptionHandling(e);
@@ -86,15 +86,15 @@ public class MemberController {
 	        loginParams.put("user_pwd", user_pwd);
 
 	        // MyBatis를 사용하여 로그인 쿼리 실행
-	        MemberDto memberDto = memberService.loginUser(loginParams);
+	        UserDto userDto = userService.loginUser(loginParams);
 	        
 	        System.out.println("loginParams -> " + ", " + loginParams.toString());
 	        System.out.println("userInfo -> " + ", " + user_id + ", " + user_pwd);
-	        System.out.println("--------memberDto -> " + ", " + memberDto);
+	        System.out.println("--------userDto -> " + ", " + userDto);
 
-	        if (memberDto != null) {
+	        if (userDto != null) {
 	            // 로그인 성공일때
-	            return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+	            return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 	        } else {
 	            // 로그인 실패일때
 	            return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
@@ -130,7 +130,7 @@ public class MemberController {
 //    public ResponseEntity<String> findPassword(@RequestParam String user_name, @RequestParam String user_id) {
 //        try {
 //            // 이름과 아이디 기반 사용자 정보를 검색
-//            MemberDto userDto = memberService.findPassword(user_name, user_id);
+//            UserDto userDto = userService.findPassword(user_name, user_id);
 //
 //            if (userDto != null) {
 //                // 비밀번호 보여주기

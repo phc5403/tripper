@@ -1,6 +1,5 @@
 package com.ssafy.trip.controller;
 
-import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,13 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.member.model.MemberDto;
 import com.ssafy.trip.model.AttractionInfoDto;
 import com.ssafy.trip.model.TripDto;
 import com.ssafy.trip.model.service.AttractionService;
@@ -25,6 +25,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @Api(tags = {"Trip 컨트롤러 API"})
 @RestController
 @RequestMapping("/trip")
@@ -81,6 +82,7 @@ public class TripController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "해당 페이지가 없습니다."),
 		@ApiResponse(code = 500, message = "서버에러") })
 	@GetMapping("/list")
+//	@GetMapping
 	public ResponseEntity<?> list(@RequestParam int sido_code, @RequestParam int gugun_code) throws Exception {
 //		attractionService.attractionList(atrractionInfoDto)
 		List<AttractionInfoDto> list =  attractionService.attractionList(sido_code, gugun_code);
@@ -91,6 +93,7 @@ public class TripController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "해당 페이지가 없습니다."),
 		@ApiResponse(code = 500, message = "서버에러") })
 	@GetMapping("/search")
+//	@GetMapping
 	public ResponseEntity<?> search(@RequestParam String title, @RequestParam int sido_code, @RequestParam int content_id) throws Exception {
 //		attractionService.attractionList(atrractionInfoDto)
 		List<AttractionInfoDto> list =  attractionService.searchByTitle(title, sido_code, content_id);

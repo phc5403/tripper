@@ -9,12 +9,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @Configuration  // 스프링 실행시 설정 파일
 @EnableSwagger2  // Swagger2를 사용
@@ -22,7 +24,7 @@ public class SwaggerConfiguration {
 	// Swagger-UI 2.x 확인
 	// http://localhost:8080/{your-app-root}/swagger-ui.html
 	// Swagger-UI 3.x 확인
-	// http://localhost:8080/{your-app-root}/swagger-ui/index.htmlz
+	// http://localhost:8080/{your-app-root}/swagger-ui/index.html
 
 	private String version;
 	private String title;
@@ -38,12 +40,12 @@ public class SwaggerConfiguration {
 	}
 
 	@Bean
-	public Docket apiMember() {
-		version = "Member";
-        title = "SSAFY Member API ";
+	public Docket apiUser() {
+		version = "User";
+        title = "SSAFY User API ";
 		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes())
 				.produces(getProduceContentTypes()).apiInfo(apiInfo()).groupName(version).select()
-				.apis(RequestHandlerSelectors.basePackage("com.ssafy.member.controller")).paths(regex("/member/.*"))
+				.apis(RequestHandlerSelectors.basePackage("com.ssafy.user.controller")).paths(regex("/user/.*"))
 				.build().useDefaultResponseMessages(false);
 	}
 	
@@ -53,7 +55,8 @@ public class SwaggerConfiguration {
         title = "SSAFY Board API "; 
 		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes())
 				.produces(getProduceContentTypes()).apiInfo(apiInfo()).groupName(version).select()
-				.apis(RequestHandlerSelectors.basePackage("com.ssafy.board.controller")).paths(regex("/board/.*"))
+//				.apis(RequestHandlerSelectors.basePackage("com.ssafy.board.controller")).paths(regex("/board/.*"))
+				.apis(RequestHandlerSelectors.basePackage("com.ssafy.board.controller")).paths(PathSelectors.ant("/board/**"))
 				.build().useDefaultResponseMessages(false);
 	}
 	

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.member.model.MemberDto;
-import com.ssafy.member.model.service.MemberService;
+import com.ssafy.user.model.UserDto;
+import com.ssafy.user.model.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,11 +33,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminUserController {
 	
-	private MemberService memberService;
+	private UserService userService;
 	
 	@Autowired
-	public AdminUserController(MemberService memberService) {
-		 this.memberService = memberService;
+	public AdminUserController(UserService userService) {
+		 this.userService = userService;
 	}
 	
 	@ApiOperation(value = "회원목록", notes = "회원의 <big>전체목록</big>을 반환해 줍니다.")
@@ -47,10 +47,10 @@ public class AdminUserController {
 	public ResponseEntity<?> userList(){
 //		log.debug("userList call");
 		try {
-			List<MemberDto> list = memberService.listUser(null);
+			List<UserDto> list = userService.listUser(null);
 			if (list != null && !list.isEmpty()) {
-				return new ResponseEntity<List<MemberDto>>(list, HttpStatus.OK);
-//				return new ResponseEntity<List<MemberDto>>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
+//				return new ResponseEntity<List<UserDto>>(HttpStatus.NOT_FOUND);
 			} else {
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			}
@@ -62,12 +62,12 @@ public class AdminUserController {
 	
 	@ApiOperation(value = "회원등록", notes = "회원의 정보를 받아 처리.")
 	@PostMapping(value = "/user")
-	public ResponseEntity<?> userRegister(@RequestBody MemberDto memberDto){
+	public ResponseEntity<?> userRegister(@RequestBody UserDto userDto){
 //		log.debug("userRegister userDto : {}", userDto);
 		try {
-			memberService.joinUser(memberDto);
-			List<MemberDto> list = memberService.listUser(null);
-			return new ResponseEntity<List<MemberDto>>(list, HttpStatus.OK);
+			userService.joinUser(userDto);
+			List<UserDto> list = userService.listUser(null);
+			return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
 //			return new ResponseEntity<Integer>(cnt, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return exceptionHandling(e);
@@ -82,9 +82,9 @@ public class AdminUserController {
 	public ResponseEntity<?> userInfo(@PathVariable("user_id") String user_id){
 //		log.debug("userInfo userid : {}", userId);
 		try {
-			MemberDto memberDto = memberService.getUser(user_id);
-			if(memberDto != null)
-				return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+			UserDto userDto = userService.getUser(user_id);
+			if(userDto != null)
+				return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 			else
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
@@ -94,12 +94,12 @@ public class AdminUserController {
 	
 	@ApiOperation(value = "회원정보수정", notes = "회원정보를 수정합니다.")
 	@PutMapping(value = "/user")
-	public ResponseEntity<?> userModify(@RequestBody MemberDto userDto){
+	public ResponseEntity<?> userModify(@RequestBody UserDto userDto){
 //		log.debug("userModify userDto : {}", userDto);
 		try {
-			memberService.updateUser(userDto);
-			List<MemberDto> list = memberService.listUser(null);
-			return new ResponseEntity<List<MemberDto>>(list, HttpStatus.OK);
+			userService.updateUser(userDto);
+			List<UserDto> list = userService.listUser(null);
+			return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
@@ -109,9 +109,9 @@ public class AdminUserController {
 	@DeleteMapping(value = "/user/{user_id}")
 	public ResponseEntity<?> userDelete(@PathVariable("user_id") String user_id){
 		try {
-			memberService.deleteUser(user_id);
-			List<MemberDto> list = memberService.listUser(null);
-			return new ResponseEntity<List<MemberDto>>(list, HttpStatus.OK);
+			userService.deleteUser(user_id);
+			List<UserDto> list = userService.listUser(null);
+			return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

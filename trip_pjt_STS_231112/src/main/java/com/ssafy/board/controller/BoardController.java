@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import springfox.documentation.annotations.ApiIgnore;
 
-@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
+@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @Api(tags = {"Board 컨트롤러 API"})
 @RestController
 @RequestMapping("/board")
@@ -74,8 +74,8 @@ public class BoardController {
 	@ApiOperation(value = "게시판 글 목록 조회", notes = "게시판의 <big>전체 목록</big>을 반환해 줍니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "페이지없어!!"),
 		@ApiResponse(code = 500, message = "서버에러!!") })
-	@GetMapping("/list")
-//	@GetMapping
+//	@GetMapping("/list")
+	@GetMapping
 	public ResponseEntity<?> list(@RequestParam @ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) Map<String, String> map)
 	{
 		logger.info("listArticle map - {}", map);
@@ -90,7 +90,7 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시판 글 상세 조회", notes = "게시판의 <big>특정 글 상세 조회</big>를 반환해 줍니다.")
-	@GetMapping("/view/{board_no}")
+	@GetMapping("/{board_no}")
 //	@GetMapping
 	public ResponseEntity<BoardDto> view(@PathVariable("board_no") @ApiParam(value = "얻어올 글의 글번호.", required = true) int board_no) throws Exception {
 		logger.info("view board_no : {}", board_no);

@@ -1,8 +1,5 @@
 package com.ssafy.config;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
