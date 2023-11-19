@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.model.mapper.TripMapper">
+	<select id="getsSidoList" resultType="map">
+		select sido_code, sido_name
+		from sido
+		order by sido_code
+	</select>
+	
+	
+	<select id="getsGugunList" parameterType="int" resultType="map">
+		select gugun_code, gugun_name
+		from gugun 
+		where sido_code = ${sido_code}
+		order by gugun_code
+	</select>
+</mapper>
