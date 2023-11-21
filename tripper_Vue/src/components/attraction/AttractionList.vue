@@ -15,7 +15,7 @@ const selectAttraction = ref({});
 // 페이지네이션
 const currentPage = ref(1);
 const totalPage = ref(0);
-// const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
+const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
 
 const param = ref({
     // serviceKey: VITE_OPEN_API_SERVICE_KEY,
@@ -27,7 +27,7 @@ const param = ref({
 
     // 페이지네이션
     pgno: currentPage.value,
-    spp: 10,
+    spp: VITE_ARTICLE_LIST_SIZE,
     key: "",
     word: "",
 });
