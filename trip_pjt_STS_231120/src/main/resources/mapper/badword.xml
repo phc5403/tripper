@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.badword.mapper.BadWordMapper">
+	<resultMap type="badWordDto" id="badword">
+		<result column="bad_no" property="bad_no" />
+		<result column="fword" property="fword" />
+	</resultMap>
+	
+	<select id="getBadList" resultMap="badword">
+		select *
+		from badword
+	</select>
+	
+	
+</mapper>
