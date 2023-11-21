@@ -12,6 +12,18 @@ function userIdCheck(userid, success, fail) {
   local.get(`/user/${userid}`).then(success).catch(fail);
 }
 
+function getModifyUser(userid, success, fail) {
+  local.get(`/user/modify/${userid}`).then(success).catch(fail);
+}
+
+function modifyUser(user, success, fail) {
+  local.put(`/user`, JSON.stringify(user)).then(success).catch(fail);
+}
+
+function deleteUser(userid, success, fail) {
+  local.delete(`/user/${userid}`).then(success).catch(fail);
+}
+
 async function userConfirm(param, success, fail) {
   console.log("param", param);
   await local.post(`/user/login`, param).then(success).catch(fail);
@@ -19,14 +31,12 @@ async function userConfirm(param, success, fail) {
 }
 
 async function findById(userid, success, fail) {
-  local.defaults.headers["Authorization"] =
-    sessionStorage.getItem("accessToken");
+  local.defaults.headers["Authorization"] = sessionStorage.getItem("accessToken");
   await local.get(`/user/info/${userid}`).then(success).catch(fail);
 }
 
 async function tokenRegeneration(user, success, fail) {
-  local.defaults.headers["refreshToken"] =
-    sessionStorage.getItem("refreshToken"); //axios header에 refresh-token 셋팅
+  local.defaults.headers["refreshToken"] = sessionStorage.getItem("refreshToken"); //axios header에 refresh-token 셋팅
   await local.post(`/user/refresh`, user).then(success).catch(fail);
 }
 
@@ -38,6 +48,9 @@ export {
   joinUser,
   userIdCheck,
   userConfirm,
+  getModifyUser,
+  modifyUser,
+  deleteUser,
   findById,
   tokenRegeneration,
   logout,

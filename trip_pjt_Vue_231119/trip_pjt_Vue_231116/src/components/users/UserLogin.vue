@@ -42,6 +42,11 @@ const saveId = () => {
   }
 };
 
+const moveUserPasswordFind = () => {
+  // 비밀번호 찾기 컴포넌트로 이동
+  router.push("/user/findpwd");
+};
+
 // const join = function () {
 //   router.push("/user/join");
 // };
@@ -99,7 +104,9 @@ const saveId = () => {
           </div>
         </form>
       </div>
-      <button class="btn-find float-end">비밀번호 찾기</button>
+      <button class="btn-find float-end" @click="moveUserPasswordFind">
+        비밀번호 찾기
+      </button>
     </div>
   </div>
 </template>

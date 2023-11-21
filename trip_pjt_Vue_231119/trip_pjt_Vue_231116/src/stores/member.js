@@ -80,10 +80,7 @@ export const useMemberStore = defineStore("memberStore", () => {
   };
 
   const tokenRegenerate = async () => {
-    console.log(
-      "토큰 재발급 >> 기존 토큰 정보 : {}",
-      sessionStorage.getItem("accessToken")
-    );
+    console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("accessToken"));
     await tokenRegeneration(
       //서버로 access token 재발급 요청
       JSON.stringify(userInfo.value),

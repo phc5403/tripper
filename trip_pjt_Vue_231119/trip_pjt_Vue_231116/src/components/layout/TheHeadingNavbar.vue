@@ -54,7 +54,9 @@ const logout = () => {
       >
         <ul class="navbar-nav navbar-nav-hover mx-auto">
           <li class="nav-item mx-2">
-            <router-link to="/attraction" class="nav-link">지역별 여행지</router-link>
+            <router-link to="/attraction" class="nav-link"
+              >지역별 여행지</router-link
+            >
           </li>
 
           <li class="nav-item mx-2">
