@@ -4,22 +4,43 @@
 
 <mapper namespace="com.ssafy.trip.model.mapper.AttractionMapper">
 
+	<select id="getTotalAttractionCount" parameterType="map" resultType="int">
+		select count(content_id)
+		from attraction_info
+		where
+		sido_code = #{sido_code}
+		and gugun_code = #{gugun_code}
+	</select>
+
 	<!-- AttractionInfoDto -->
 	<select id="attractionList" parameterType="map"
 		resultType="AttractionInfoDto">
 		<if test="sido_code == 0">
 			select *
 			from attraction_info
+			order by content_type_id
 		</if>
 
 		<if test="sido_code != 0">
 			select *
 			from attraction_info
 			where
-			sido_code = ${sido_code}
-			and gugun_code = ${gugun_code}
+			sido_code = #{sido_code}
+			and gugun_code = #{gugun_code}
+			order by content_type_id
+			limit #{start}, #{listsize}
 		</if>
 	</select>
+	
+	
+	
+	<!-- 424개 중 상위 7개 출력 -->
+	<!-- 
+	select * from attraction_info
+	where sido_code = 1 and gugun_code= 1
+	order by content_type_id
+	limit 0, 7;
+	 -->
 
 	<!-- [sido_code, content_id, title, param3, param1, param2] -->
 	<select id="searchByTitle" parameterType="hashMap"

@@ -28,6 +28,9 @@ public class UserDto {
 	
 	@ApiModelProperty(value = "계정 상태", hidden = true)
 	private String user_status;
+	
+	@ApiModelProperty(value = "refreshToken")
+	private String refreshToken;
 
 	public String getUser_id() {
 		return user_id;

@@ -5,13 +5,15 @@
 <mapper namespace="com.ssafy.trip.model.mapper.TripMapper">
 	<select id="getsSidoList" resultType="map">
 		select sido_code, sido_name
-		from sido;
+		from sido
+		order by sido_code
 	</select>
 	
 	
 	<select id="getsGugunList" parameterType="int" resultType="map">
-		select gugun_code, gugun_name, sido_code 
+		select gugun_code, gugun_name
 		from gugun 
 		where sido_code = ${sido_code}
+		order by gugun_code
 	</select>
 </mapper>

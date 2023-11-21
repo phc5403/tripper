@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.badword.model.BadWordDto;
+import com.ssafy.badword.service.BadWordService;
 import com.ssafy.board.model.BoardDto;
 import com.ssafy.board.model.BoardListDto;
 import com.ssafy.board.model.FileInfoDto;
@@ -15,20 +17,52 @@ import com.ssafy.board.model.mapper.BoardMapper;
 @Service
 public class BoardServiceImpl implements BoardService {
 	BoardMapper mapper;
-	
+	BadWordService badWordService;
+
 	@Autowired
-	public BoardServiceImpl(BoardMapper mapper) {
+	public BoardServiceImpl(BoardMapper mapper, BadWordService badWordService) {
 		super();
 		this.mapper = mapper;
+		this.badWordService = badWordService;
 	}
 
 	@Override
-	public void writeArticle(BoardDto boardDto) throws Exception {
+	public int writeArticle(BoardDto boardDto) throws Exception {
+		// 비속어 검사
+		String title = boardDto.getBoard_title();
+		String content = boardDto.getBoard_content();
+
+		System.out.println("-- BoardServiceImpl - writeArticle --");
+
+		List<BadWordDto> badList = badWordService.getBadList();
+		System.out.println(badList.toString());
+
+		String pattern = "";
+		for (int i = 0; i < badList.size(); i++) {
+			pattern = badList.get(i).getFword();
+
+			int titleChk = badWordService.boyerMoore(title, pattern);
+			int contChk = badWordService.boyerMoore(content, pattern);
+//		 		System.out.println("1 : " + titleChk + ", " + contChk);
+
+			// 0 이상이면 걸림
+			if (titleChk >= 0 || contChk >= 0) {
+//					System.out.println("검거");
+				System.out.println("비속어 필터 걸림");
+				return 0;
+//		 			return;
+			}
+		}
+
+		// 글 작성
 		mapper.writeArticle(boardDto);
 		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
+		System.out.println(fileInfos);
+		
 		if (fileInfos != null && !fileInfos.isEmpty()) {
 			mapper.registerFile(boardDto);
 		}
+		return -1;
 	}
 
 	@Override
@@ -71,8 +105,40 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void modifyArticle(BoardDto boardDto) throws Exception {
+	public int modifyArticle(BoardDto boardDto) throws Exception {
+		// 비속어 검사
+		String title = boardDto.getBoard_title();
+		String content = boardDto.getBoard_content();
+
+		System.out.println("-- BoardServiceImpl - writeArticle --");
+
+		List<BadWordDto> badList = badWordService.getBadList();
+		System.out.println(badList.toString());
+
+		String pattern = "";
+		for (int i = 0; i < badList.size(); i++) {
+			pattern = badList.get(i).getFword();
+
+			int titleChk = badWordService.boyerMoore(title, pattern);
+			int contChk = badWordService.boyerMoore(content, pattern);
+//				 		System.out.println("1 : " + titleChk + ", " + contChk);
+
+			// 0 이상이면 걸림
+			if (titleChk >= 0 || contChk >= 0) {
+//							System.out.println("검거");
+				System.out.println("비속어 필터 걸림");
+				return 0;
+//				 			return;
+			}
+		}
+
+		// 글 작성
 		mapper.modifyArticle(boardDto);
+		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
+		if (fileInfos != null && !fileInfos.isEmpty()) {
+			mapper.registerFile(boardDto);
+		}
+		return -1;
 	}
 
 	@Override
