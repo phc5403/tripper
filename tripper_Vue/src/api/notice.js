@@ -2,7 +2,7 @@ import { localAxios } from "@/util/http-commons";
 
 const local = localAxios();
 
-const url = "/board";
+const url = "/notice";
 
 function listArticle(param, success, fail) {
   local.get(`${url}`, { params: param }).then(success).catch(fail);
@@ -10,14 +10,12 @@ function listArticle(param, success, fail) {
 
 function detailArticle(articleno, success, fail) {
   local.get(`${url}/${articleno}`).then(success).catch(fail);
-  console.log("가져왔나여?");
 }
 
 function registArticle(article, success, fail) {
-  // console.log("board.js -> registArticle :: ", JSON.stringify(forms));
-  // console.log("board.js -> registArticle2 :: ", forms);
+  console.log("notice.js -> registArticle :: ", JSON.stringify(article));
   local.post(`${url}`, JSON.stringify(article)).then(success).catch(fail);
-  console.log("board.js -> 보여주나연?");
+  console.log("notice.js -> 보여주나연?");
 }
 
 function getModifyArticle(articleno, success, fail) {
@@ -25,7 +23,7 @@ function getModifyArticle(articleno, success, fail) {
 }
 
 function modifyArticle(article, success, fail) {
-  console.log("board.js --> ", article);
+  console.log("notice.js --> ", article);
   local.put(`${url}`, JSON.stringify(article)).then(success).catch(fail);
 }
 

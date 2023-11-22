@@ -1,78 +1,168 @@
 <script setup>
-function recoverPassword() {
-    // Add logic to handle password recovery
-    console.log("Recovering password...");
-    console.log("Email:", this.email);
-    console.log("User ID:", this.userId);
-    console.log("Save User ID:", this.saveUserId);
-    // Implement password recovery functionality here
+import { ref, watch } from "vue";
+import { findUserPwd } from "@/api/user";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const user = ref({
+  user_name: "",
+  user_id: "",
+});
+
+const nameErrMsg = ref("");
+const idErrMsg = ref("");
+
+watch(
+  //유저 이름 체크
+  () => user.value.user_name,
+  (value) => {
+    let len = value.length;
+    if (len == 0 || len > 20) {
+      nameErrMsg.value = "성함을 다시 입력하세요.";
+    } else {
+      nameErrMsg.value = "";
+    }
+  }
+);
+watch(
+  //유저 아이디 체크
+  () => user.value.user_id,
+  (value) => {
+    let len = value.length;
+    if (len == 0 || len > 20) {
+      idErrMsg.value = "아이디를 다시 입력하세요.";
+    } else {
+      idErrMsg.value = "";
+    }
+  }
+);
+
+function onSubmit() {
+  console.log(nameErrMsg.value);
+  console.log(idErrMsg.value);
+  if (nameErrMsg.value) {
+    alert(nameErrMsg.value);
+  } else if (idErrMsg.value) {
+    alert(idErrMsg.value);
+  } else {
+    findPwd();
+  }
 }
+function findPwd() {
+  console.log(
+    "찾을 유저의 정보는? " + user.value.user_name,
+    user.value.user_id
+  );
+  findUserPwd(
+    user.value,
+    ({ data }) => {
+      // console.log(data);
+      if (data) {
+        alert(data);
+        router.push("/user/login");
+      } else {
+        alert("일치하는 유저 정보가 없습니다.");
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
+
+// function findPwd() {
+//   console.log("찾을 유저의 정보는? " + user.value.user_name, user.value.user_id);
+//   findUserPwd(
+//     user.value,
+//     (response) => {
+//       console.log(response);
+//       alert(response.status);
+//       router.push("/user/login");
+//     },
+//     (error) => {
+//       console.log(error);
+//     }
+//   );
+// }
 </script>
 
 <template>
-    <div class="container">
-        <div class="main border">
-            <div>
-                <div>
-                    <h4>
-                        <p class="bi bi-person-plus-fill">비밀번호 찾기</p>
-                    </h4>
-                    <br />
-                </div>
-
-                <form>
-                    <div class="mb-1">
-                        <label for="userid" class="form-label">아이디</label><br />
-                        <input type="text" class="form-control" placeholder="아이디를 입력하세요" />
-                    </div>
-                    <div class="mb-1">
-                        <label for="username" class="form-label">이름</label><br />
-
-                        <input type="text" class="form-control" placeholder="이름을 입력하세요" />
-                    </div>
-
-                    <div class="col-auto text-center mt-3">
-                        <button type="button" class="btn btn-primary mb-3" @click="login">찾기</button>
-                        <!-- <button type="button" class="btn btn-outline-success ms-1 mb-3" @click="join">
-              회원가입
-            </button> -->
-                    </div>
-                </form>
-            </div>
+  <div class="container">
+    <div class="main border">
+      <div>
+        <div>
+          <h4>
+            <p class="bi bi-person-plus-fill">비밀번호 찾기</p>
+          </h4>
+          <br />
         </div>
+
+        <form @submit.prevent="onSubmit">
+          <div class="mb-1">
+            <label for="userid" class="form-label">이름</label><br />
+            <input
+              type="text"
+              class="form-control"
+              v-model="user.user_name"
+              placeholder="이름을 입력하세요"
+            />
+          </div>
+          <div class="mb-1">
+            <label for="username" class="form-label">아이디</label><br />
+
+            <input
+              type="text"
+              class="form-control"
+              v-model="user.user_id"
+              placeholder="아이디를 입력하세요"
+            />
+          </div>
+
+          <div class="col-auto text-center mt-3">
+            <button type="submit" class="btn btn-primary mb-3">찾기</button>
+            <button type="button" class="btn btn-primary mb-3">뒤로</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 .container > div {
-    width: 30%;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: inset 0 0 1px 1px hlsa(0, 0%, 100%, 0.9), 0 20px 27px 0 rgba(0, 0, 0, 0.05) !important;
+  width: 30%;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 1px 1px hlsa(0, 0%, 100%, 0.9),
+    0 20px 27px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
 .main {
-    align-items: center;
-    background-color: whitesmoke;
-    flex-direction: row;
+  align-items: center;
+  background-color: whitesmoke;
+  flex-direction: row;
 }
 .bi {
-    color: rgb(206, 163, 255);
-    text-align: center;
+  color: rgb(206, 163, 255);
+  text-align: center;
 }
 .btn {
-    background-color: rgb(206, 163, 255);
-    border-color: white;
+  background-color: rgb(206, 163, 255);
+  border-color: white;
 }
 .btn-find {
-    font-size: 12px;
-    border: none;
-    background-color: whitesmoke;
+  font-size: 12px;
+  border: none;
+  background-color: whitesmoke;
+}
+.col-auto {
+  justify-content: space-between;
 }
 </style>
