@@ -7,6 +7,7 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import App from "./App.vue";
 import router from "./router";
 
+// 부트스트랩
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 

@@ -31,6 +31,13 @@ function findUserPwd(param, success, fail) {
   console.log("?ㄴㄴ");
 }
 
+function findUserPwd(param, success, fail) {
+    console.log("params", param);
+    console.log("params json", JSON.stringify(param));
+    local.get(`/user/findpwd`, { params: param }).then(success).catch(fail);
+    console.log("?ㄴㄴ");
+}
+
 async function userConfirm(param, success, fail) {
   console.log("param", param);
   await local.post(`/user/login`, param).then(success).catch(fail);
@@ -63,3 +70,4 @@ export {
   tokenRegeneration,
   logout,
 };
+

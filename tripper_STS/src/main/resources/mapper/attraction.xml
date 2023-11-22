@@ -15,18 +15,26 @@
 	<!-- AttractionInfoDto -->
 	<select id="attractionList" parameterType="map"
 		resultType="AttractionInfoDto">
-		<if test="sido_code == 0">
-			select *
-			from attraction_info
-			order by content_type_id
-		</if>
-
-		<if test="sido_code != 0">
+		<if test="choiceContent == null">
 			select *
 			from attraction_info
 			where
 			sido_code = #{sido_code}
 			and gugun_code = #{gugun_code}
+			order by content_type_id
+			limit #{start}, #{listsize}
+		</if>
+
+		<if test="choiceContent != null">
+			select *
+			from attraction_info
+			where
+			sido_code = #{sido_code}
+			and gugun_code = #{gugun_code}
+			and content_type_id IN
+			<foreach item="item" collection="choiceContent" open="(" close=")" separator=",">
+    		#{item}
+ 			 </foreach>
 			order by content_type_id
 			limit #{start}, #{listsize}
 		</if>
