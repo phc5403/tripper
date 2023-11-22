@@ -1,11 +1,72 @@
 <script setup>
-function recoverPassword() {
-    // Add logic to handle password recovery
-    console.log("Recovering password...");
-    console.log("Email:", this.email);
-    console.log("User ID:", this.userId);
-    console.log("Save User ID:", this.saveUserId);
-    // Implement password recovery functionality here
+import { ref, watch } from "vue";
+import { findUserPwd } from "@/api/user";
+import { useRouter } from "vue-router";
+// function recoverPassword() {
+//     // Add logic to handle password recovery
+//     console.log("Recovering password...");
+//     console.log("Email:", this.email);
+//     console.log("User ID:", this.userId);
+//     console.log("Save User ID:", this.saveUserId);
+//     // Implement password recovery functionality here
+// }
+const router = useRouter();
+
+const user = ref({
+    user_name: "",
+    user_id: "",
+});
+
+const nameErrMsg = ref("");
+const idErrMsg = ref("");
+
+watch(
+    //유저 이름 체크
+    () => user.value.user_name,
+    (value) => {
+        let len = value.length;
+        if (len == 0 || len > 20) {
+            nameErrMsg.value = "성함을 다시 입력하세요.";
+        } else {
+            nameErrMsg.value = "";
+        }
+    }
+);
+watch(
+    //유저 아이디 체크
+    () => user.value.user_id,
+    (value) => {
+        let len = value.length;
+        if (len == 0 || len > 20) {
+            idErrMsg.value = "아이디를 다시 입력하세요.";
+        } else {
+            idErrMsg.value = "";
+        }
+    }
+);
+
+function onSubmit() {
+    if (nameErrMsg.value) {
+        alert(nameErrMsg.value);
+    } else if (idErrMsg.value) {
+        alert(idErrMsg.value);
+    } else {
+        findPwd();
+    }
+}
+function findPwd() {
+    console.log("찾을 유저의 정보는? " + user.value.user_name, user.value.user_id);
+    findUserPwd(
+        user.value,
+        ({ data }) => {
+            console.log(data);
+            alert(data);
+            router.push("/user/login");
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
 }
 </script>
 
@@ -20,22 +81,20 @@ function recoverPassword() {
                     <br />
                 </div>
 
-                <form>
+                <form @submit.prevent="onSubmit">
                     <div class="mb-1">
-                        <label for="userid" class="form-label">아이디</label><br />
-                        <input type="text" class="form-control" placeholder="아이디를 입력하세요" />
+                        <label for="userid" class="form-label">이름</label><br />
+                        <input type="text" class="form-control" v-model="user.user_name" placeholder="이름을 입력하세요" />
                     </div>
                     <div class="mb-1">
-                        <label for="username" class="form-label">이름</label><br />
+                        <label for="username" class="form-label">아이디</label><br />
 
-                        <input type="text" class="form-control" placeholder="이름을 입력하세요" />
+                        <input type="text" class="form-control" v-model="user.user_id" placeholder="아이디를 입력하세요" />
                     </div>
 
                     <div class="col-auto text-center mt-3">
-                        <button type="button" class="btn btn-primary mb-3" @click="login">찾기</button>
-                        <!-- <button type="button" class="btn btn-outline-success ms-1 mb-3" @click="join">
-              회원가입
-            </button> -->
+                        <button type="submit" class="btn btn-primary mb-3">찾기</button>
+                        <button type="button" class="btn btn-primary mb-3">뒤로</button>
                     </div>
                 </form>
             </div>
@@ -74,5 +133,8 @@ function recoverPassword() {
     font-size: 12px;
     border: none;
     background-color: whitesmoke;
+}
+.col-auto {
+    justify-content: space-between;
 }
 </style>

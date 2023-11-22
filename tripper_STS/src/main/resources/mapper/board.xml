@@ -41,7 +41,7 @@
 	<sql id="search">
 		<if test="word != null and word != ''">
 			<if test="key == 'board_title'">
-				and subject like concat('%', #{word}, '%')
+				and board_title like concat('%', #{word}, '%')
 			</if>
 			<if test="key != 'board_title'">
 				and ${key} = #{word}

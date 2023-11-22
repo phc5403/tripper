@@ -23,7 +23,7 @@ const article = ref({
     board_content: "",
     board_hit: 0,
     board_write_time: "",
-    // fileInfos: "",
+    // fileInfos: ,
 });
 
 console.log("====================");
@@ -98,6 +98,7 @@ function writeArticle() {
         (response) => {
             let msg = "글등록 처리시 문제 발생했습니다.";
             if (response.status == 202) {
+                // 비속어 필터 걸렸을 때
                 msg = "부적절한 내용이 포함되어 글 등록에 실패했습니다.";
                 console.log("------------------------");
                 console.log(msg);

@@ -37,18 +37,22 @@
 		select
 		user_id, user_name, token
 		from users
-		where user_id = #{user_id} and user_pwd = #{user_pwd}
+		where user_id = #{user_id} and
+		user_pwd = #{user_pwd}
 	</select>
-	
-	
 
-	<!-- <select id="findPassword" parameterType="String" resultType="String"> 
-		select user_pwd from users where user_name = #{user_name} and user_id = #{user_id} 
-		</select> -->
+
+
+	<select id="findPassword" parameterType="String"
+		resultType="String">
+		select user_pwd from users where user_name = #{user_name} and user_id =
+		#{user_id}
+	</select>
 
 	<select id="listUser" resultMap="userAll">
 		select user_name, user_id,
-		user_pwd, user_email_id, user_email_domain, user_join_date, user_status
+		user_pwd, user_email_id, user_email_domain, user_join_date,
+		user_status
 		from users
 		order by
 		user_join_date
@@ -56,7 +60,8 @@
 
 	<select id="getUser" parameterType="String" resultMap="userAll">
 		select
-		user_id, user_name, user_pwd, user_email_id, user_email_domain, user_join_date, user_status
+		user_id, user_name, user_pwd, user_email_id, user_email_domain,
+		user_join_date, user_status
 		from users
 		where user_id = #{user_id}
 	</select>
@@ -76,25 +81,29 @@
 		where
 		user_id = #{user_id}
 	</delete>
-	
+
 	<select id="userInfo" parameterType="string" resultMap="user">
-		select user_name, user_id, user_email_id, user_email_domain, user_join_date
+		select
+		user_name, user_id, user_email_id, user_email_domain, user_join_date
 		from users where user_id = #{user_id}
 	</select>
-	
+
 	<update id="saveRefreshToken" parameterType="map">
-		update users set token = #{token}
+		update users set
+		token = #{token}
 		where user_id = #{user_id}
 	</update>
-	
-	<select id="getRefreshToekn" parameterType="string" resultType="string">
+
+	<select id="getRefreshToekn" parameterType="string"
+		resultType="string">
 		select token
 		from users
 		where user_id = #{user_id}
 	</select>
-	
+
 	<update id="deleteRefreshToken" parameterType="map">
-		update users set token = #{token, jdbcType=VARCHAR}
+		update users set
+		token = #{token, jdbcType=VARCHAR}
 		where user_id = #{user_id}
 	</update>
 </mapper>

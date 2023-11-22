@@ -67,7 +67,6 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시판 글 작성", notes = "게시판에 <big>글 작성</big>을 합니다.")
-//	@PostMapping("/write")
 	@PostMapping
 	public ResponseEntity<?> write(
 			@RequestBody BoardDto boardDto) {

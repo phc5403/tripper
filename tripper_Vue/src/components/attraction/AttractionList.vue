@@ -6,11 +6,31 @@ import { listSido, listGugun } from "@/api/map";
 import { listAttraction } from "@/api/attraction";
 import AttractionListItem from "@/components/attraction/item/AttractionListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
+// import VCheckBox from "@/components/common/VCheckBox.vue";
+import { useContentStore } from "@/stores/attractionInfo";
+import AttractionDetailModal from "@/components/attraction/item/AttractionDetailModal.vue";
 
 const sidoList = ref([]);
 const gugunList = ref([{ text: "구군선택", value: "" }]);
-const visitAttractions = ref([]);
-const selectAttraction = ref({});
+const visitAttractions = ref([]); // 검색 결과에 따른 목록 저장될 곳
+const selectAttraction = ref({}); // 시도, 구군 선택 가능 항목들
+
+// 검색할 컨텐츠 선택
+const store = useContentStore();
+const contents = store.contents; // 저장소에서 컨텐츠 항목 정보 가져옴.
+const choiceContent = ref([]); // 선택한 컨텐츠만 저장할 배열
+const choiceAll = ref(false); // 전체 선택 버튼 활성화 여부
+//
+
+const checkAll = () => {
+    if (choiceAll.value) {
+        console.log("true");
+        choiceContent.value = contents.map((content) => content.id);
+    } else {
+        console.log("false");
+        choiceContent.value = [];
+    }
+};
 
 // 페이지네이션
 const currentPage = ref(1);
@@ -95,13 +115,21 @@ const onChangeGugun = (val) => {
     console.log("onChangeGugun =>");
     console.log(val);
     param.value.gugun_code = val;
-    getlistAttraction();
+    // getlistAttraction();
 };
 
 const getlistAttraction = () => {
-    console.log("서버에서 여행지 목록 얻어오기", param.value);
+    console.log("서버에서 여행지 목록 얻어오기");
+    console.log(param.value);
+    console.log(choiceContent.value);
+    // param.value.contents = updateContent;
+    // console.log(selectedContent);
+    // console.log(selectedContent.value);
+    // param.value.contents = updateContent;
+    // console.log(param.value.contents);
     listAttraction(
         param.value,
+        choiceContent.value,
         ({ data }) => {
             console.log("getlistAttraction() : listAttraction Success");
             console.log(data);
@@ -112,7 +140,7 @@ const getlistAttraction = () => {
             console.log(visitAttractions.value);
             // console.log(typeof visitAttractions.value);
             currentPage.value = data.currentPage;
-            totalPage.value = data.totalPageCount;
+            totalPage.value = data.totalPageCount; // 1
         },
         (err) => {
             console.log(err);
@@ -125,6 +153,22 @@ const viewAttraction = (attr) => {
     console.log(attr);
     selectAttraction.value = attr;
 };
+
+const updateContent = (selectedContent) => {
+    console.log("현재 선택된 컨텐츠");
+    console.log(selectedContent); // true
+    param.value.contents = selectedContent;
+    console.log(typeof updateContent); // function
+    console.log(typeof selectedContent); // boolean
+};
+
+// Modal
+const modalShow = ref(false);
+
+const openModal = function () {
+    modalShow.value = !modalShow.value;
+    console.log("모달 오픈! modalShow : " + modalShow.value);
+};
 </script>
 
 <template>
@@ -133,9 +177,10 @@ const viewAttraction = (attr) => {
             <!-- title -->
             <div class="container text-center pb-3 mt-5 mb-3 w-25 border-bottom border-4">
                 <div class="fs-2 fw-semibold">지역별 관광정보</div>
+                <!-- <div>{{ store.contents[1].type }}</div> -->
             </div>
 
-            <!-- search -->
+            <!-- search : Sido, Gugun -->
             <div class="row mb-2">
                 <div class="col d-flex flex-row-reverse">
                     <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
@@ -145,9 +190,27 @@ const viewAttraction = (attr) => {
                 </div>
             </div>
 
+            <!-- search : ContentType -->
+            <div>
+                <div class="form-check form-check-inline" v-for="content in contents" :key="content.id">
+                    <input class="form-check-input" type="checkbox" :id="'check_' + content.id" :value="content.id" v-model="choiceContent" />
+                    <label class="form-check-label" :for="'check_' + content.id">{{ content.type }}</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="check_all" value="choiceAll" v-model="choiceAll" @change="checkAll" />
+                    <label class="form-check-label" for="check_all">전체</label>
+                </div>
+                <div>?? : {{ choiceContent }}</div>
+                <div>{{ choiceAll }}</div>
+
+                <!-- <VCheckBox @change-content="updateContent" :clickSearch="clickSearch" /> -->
+                <button class="btn btn-dark" type="button" @click="getlistAttraction">검색</button>
+            </div>
+
+            <!-- map -->
             <div class="container">
                 <div class="row">
-                    <!-- map -->
                     <div>
                         <!-- <div id="map" class="container border w-100 shadow-sm"></div> -->
                         <VKakaoMap :attractions="visitAttractions" :selectAttraction="selectAttraction" />
@@ -182,6 +245,7 @@ const viewAttraction = (attr) => {
                                         :key="attraction.countent_id"
                                         @click="viewAttraction(attraction)"
                                         :attraction="attraction"
+                                        @openModal="openModal"
                                     >
                                     </AttractionListItem>
                                 </tbody>
