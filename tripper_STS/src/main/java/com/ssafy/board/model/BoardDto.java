@@ -49,5 +49,9 @@ public class BoardDto {
 //	@JsonProperty(value="fileInfos")
 	private List<FileInfoDto> fileInfos;
 	
+	@ApiModelProperty(value = "작성자 프로필")
+//	@JsonProperty(value = "user_img")
+	private String user_img;
+	
 	
 }

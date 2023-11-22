@@ -15,7 +15,7 @@ defineProps({ article: Object });
     </td>
     <td>{{ article.user_id }}</td>
     <td>{{ article.board_hit }}</td>
-    <td>{{ article.board_write_time }}</td>
+    <td>{{ article.board_wrtie_time }}</td>
   </tr>
 </template>
 

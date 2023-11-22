@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS `ssafypjt`.`users` (
   `user_email_id` VARCHAR(20) NOT NULL,
   `user_email_domain` VARCHAR(60) NULL DEFAULT 'ssafy.com',
   `user_join_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_img` LONGBLOB NULL DEFAULT NULL,
   `user_status` VARCHAR(10) NOT NULL DEFAULT 'true',
   `token` VARCHAR(1000) null default null, 
   PRIMARY KEY (`user_id`))
