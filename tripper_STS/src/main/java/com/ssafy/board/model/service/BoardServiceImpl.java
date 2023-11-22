@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.badword.model.BadWordDto;
 import com.ssafy.badword.service.BadWordService;
@@ -27,6 +28,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public int writeArticle(BoardDto boardDto) throws Exception {
 		// 비속어 검사
 		String title = boardDto.getBoard_title();
@@ -74,6 +76,8 @@ public class BoardServiceImpl implements BoardService {
 		int start = currentPage * sizePerPage - sizePerPage;
 		param.put("start", start);
 		param.put("listsize", sizePerPage);
+		
+		System.out.println("BoardServiceImpl : " + param.toString());
 
 		String key = map.get("key");
 		param.put("key", key == null ? "" : key);

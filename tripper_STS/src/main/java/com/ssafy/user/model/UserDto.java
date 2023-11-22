@@ -31,6 +31,9 @@ public class UserDto {
 	
 	@ApiModelProperty(value = "refreshToken")
 	private String refreshToken;
+	
+	@ApiModelProperty(value = "프로필사진")
+	private String user_img;
 
 	public String getUser_id() {
 		return user_id;

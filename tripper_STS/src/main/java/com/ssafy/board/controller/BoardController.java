@@ -1,10 +1,19 @@
 package com.ssafy.board.controller;
 
+import java.io.File;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,11 +29,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.board.model.BoardDto;
 import com.ssafy.board.model.service.BoardService;
 import com.ssafy.board.model.BoardListDto;
+import com.ssafy.board.model.FileInfoDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -43,8 +55,8 @@ import springfox.documentation.annotations.ApiIgnore;
 public class BoardController {
 
 	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
-//	@Autowired
-//	private ServletContext servletContext;
+	@Autowired
+	private ServletContext servletContext;
 
 	// 파일 업로드  //
 	@Value("${file.path}")
@@ -67,27 +79,26 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시판 글 작성", notes = "게시판에 <big>글 작성</big>을 합니다.")
-//	@PostMapping("/write")
-	@PostMapping
-	public ResponseEntity<?> write(
-			@RequestBody BoardDto boardDto) {
-		logger.info("writeArticle boardDto -> {}", boardDto);
-		try {
-			System.out.println("WriteArticle boardDto");
-			System.out.println(boardDto);
-//			boardService.writeArticle(boardDto); // Default
-			
-			if(boardService.writeArticle(boardDto) >= 0) {
-				System.out.println("BoardController -> 비속어 필터 걸림!(WRITE)");
-				return new ResponseEntity<Void>(HttpStatus.ACCEPTED);				
-			} else {
-				logger.info("write boardDto : {}", boardDto);
-				return new ResponseEntity<Void>(HttpStatus.CREATED);
-			}
-		} catch (Exception e) {
-			return exceptionHandling(e);
-		}
-	}
+  @PostMapping
+    public ResponseEntity<?> write(
+            @RequestBody BoardDto boardDto) {
+        logger.info("writeArticle boardDto -> {}", boardDto);
+        try {
+            System.out.println("WriteArticle boardDto");
+            System.out.println(boardDto);
+//            boardService.writeArticle(boardDto); // Default
+            
+            if(boardService.writeArticle(boardDto) >= 0) {
+                System.out.println("BoardController -> 비속어 필터 걸림!(WRITE)");
+                return new ResponseEntity<Void>(HttpStatus.ACCEPTED);                
+            } else {
+                logger.info("write boardDto : {}", boardDto);
+                return new ResponseEntity<Void>(HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
 
 	@ApiOperation(value = "게시판 글 목록 조회", notes = "게시판의 <big>전체 목록</big>을 반환해 줍니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "페이지없어!!"),
@@ -116,6 +127,7 @@ public class BoardController {
 	public ResponseEntity<BoardDto> view(
 			@PathVariable("board_no") @ApiParam(value = "얻어올 글의 글번호.", required = true) int board_no) throws Exception {
 		logger.info("view board_no : {}", board_no);
+		logger.info("가져온것", boardService.getArticle(board_no));
 		boardService.updateHit(board_no);
 		return new ResponseEntity<BoardDto>(boardService.getArticle(board_no), HttpStatus.OK);
 	}

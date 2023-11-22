@@ -23,13 +23,14 @@ const article = ref({
   board_content: "",
   board_hit: 0,
   board_write_time: "",
+  // fileInfos: "",
 });
 
 console.log("====================");
 console.log("글 작성자");
 console.log(userInfo.value);
 console.log(userInfo.value.user_id); // user_id 뽑기
-// console.log(article.user_id); // undefined
+console.log(article.user_id); // undefined
 
 if (props.type === "modify") {
   console.log(articleno + "번글 얻어와서 수정할거야");
@@ -45,7 +46,7 @@ if (props.type === "modify") {
       article.value.user_id = data.user_id;
       article.value.board_title = data.board_title;
       article.value.board_content = data.board_content;
-      article.value.fileInfos = data.fileInfos;
+      // article.value.fileInfos = data.fileInfos;
     },
     (error) => {
       console.log(error);
@@ -91,21 +92,6 @@ function onSubmit() {
 
 function writeArticle() {
   console.log("글등록하자!!", article.value);
-
-  // const formData = new FormData(); // FormData 객체 생성
-  // formData.append("user_id", article.value.user_id);
-  // formData.append("board_title", article.value.board_title);
-  // formData.append("board_content", article.value.board_content);
-
-  // const upfileInput = document.getElementById("upfile"); // 파일 입력 요소 가져오기
-  // const files = upfileInput.files; // 선택된 파일들
-
-  // for (let i = 0; i < files.length; i++) {
-  //   formData.append("upfile", files[i]); // FormData에 파일 추가
-  // }
-
-  // console.log("폼 보내자!!", formData);
-  // console.log("이거맞나", formData.get("upfile"));
   // API 호출
   registArticle(
     article.value,
@@ -157,41 +143,55 @@ function moveList() {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit" enctype="multipart/form-data">
+  <form @submit.prevent="onSubmit">
     <div class="mb-3">
       <label for="userid" class="form-label">작성자 ID : </label>
       <!-- <input type="text" class="form-control" v-model="article.user_id" :disabled="isUseId" placeholder="작성자ID..." /> -->
-      <input type="text" class="form-control" v-model="article.user_id" :disabled="isUseId" />
+      <input
+        type="text"
+        class="form-control"
+        v-model="article.user_id"
+        :disabled="isUseId"
+      />
     </div>
     <div class="mb-3">
       <label for="board_title" class="form-label">제목 : </label>
-      <input type="text" class="form-control" v-model="article.board_title" placeholder="제목..." />
+      <input
+        type="text"
+        class="form-control"
+        v-model="article.board_title"
+        placeholder="제목..."
+      />
     </div>
     <div class="mb-3">
       <label for="board_content" class="form-label">내용 : </label>
-      <textarea class="form-control" v-model="article.board_content" rows="10"></textarea>
+      <textarea
+        class="form-control"
+        v-model="article.board_content"
+        rows="10"
+      ></textarea>
     </div>
-    <!-- <div class="mb-3">
-      <label for="upfile" class="form-label">파일 : </label>
-      <input
-        type="file"
-        class="form-control border"
-        id="upfile"
-        name="upfile"
-        multiple="multiple"
-      />
-    </div> -->
 
     <!-- <div class="mb-3">
             <label for="upfile" class="form-label">파일:</label>
             <input type="file" class="form-control border" id="upfile" name="upfile" multiple="multiple" />
         </div> -->
     <div class="col-auto text-center">
-      <button type="submit" class="btn btn-outline-primary mb-3" v-if="type === 'regist'">
+      <button
+        type="submit"
+        class="btn btn-outline-primary mb-3"
+        v-if="type === 'regist'"
+      >
         글작성
       </button>
-      <button type="submit" class="btn btn-outline-success mb-3" v-else>글수정</button>
-      <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="moveList">
+      <button type="submit" class="btn btn-outline-success mb-3" v-else>
+        글수정
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-danger mb-3 ms-1"
+        @click="moveList"
+      >
         목록으로이동...
       </button>
     </div>
