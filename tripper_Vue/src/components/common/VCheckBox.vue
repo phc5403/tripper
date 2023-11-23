@@ -32,14 +32,28 @@ watch(
 </script>
 
 <template>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
     <!-- Content Choice -->
     <div class="form-check form-check-inline" v-for="content in contents" :key="content.id">
-        <input class="form-check-input" type="checkbox" :id="'check_' + content.id" :value="content.id" v-model="choiceContent" />
+        <input
+            class="form-check-input"
+            type="checkbox"
+            :id="'check_' + content.id"
+            :value="content.id"
+            v-model="choiceContent"
+        />
         <label class="form-check-label" :for="'check_' + content.id">{{ content.type }}</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="check_all" value="choiceAll" v-model="choiceAll" @change="checkAll" />
+        <input
+            class="form-check-input"
+            type="checkbox"
+            id="check_all"
+            value="choiceAll"
+            v-model="choiceAll"
+            @change="checkAll"
+        />
         <label class="form-check-label" for="check_all">전체</label>
     </div>
     <!-- <button class="btn btn-dark" type="button" @click="getlistAttraction">검색</button> -->
@@ -49,4 +63,9 @@ watch(
     <!-- <div>{{ choiceAll }}</div> -->
 </template>
 
-<style scoped></style>
+<style scoped>
+label,
+input {
+    font-family: "Dongle", sans-serif;
+}
+</style>

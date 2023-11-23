@@ -31,20 +31,6 @@ function findUserPwd(param, success, fail) {
     console.log("?ㄴㄴ");
 }
 
-// function findUserPwd(param, success, fail) {
-//   console.log("params", param);
-//   console.log("params json", JSON.stringify(param));
-//   local.get(`/user/findpwd`, { params: param }).then(success).catch(fail);
-//   console.log("?ㄴㄴ");
-// }
-
-function findUserPwd(param, success, fail) {
-    console.log("params", param);
-    console.log("params json", JSON.stringify(param));
-    local.get(`/user/findpwd`, { params: param }).then(success).catch(fail);
-    console.log("?ㄴㄴ");
-}
-
 async function userConfirm(param, success, fail) {
     console.log("param", param);
     await local.post(`/user/login`, param).then(success).catch(fail);
@@ -65,4 +51,15 @@ async function logout(userid, success, fail) {
     await local.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
-export { joinUser, userIdCheck, userConfirm, getModifyUser, modifyUser, deleteUser, findUserPwd, findById, tokenRegeneration, logout };
+export {
+    joinUser,
+    userIdCheck,
+    userConfirm,
+    getModifyUser,
+    modifyUser,
+    deleteUser,
+    findUserPwd,
+    findById,
+    tokenRegeneration,
+    logout,
+};

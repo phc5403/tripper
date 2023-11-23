@@ -17,7 +17,7 @@ import AttractionList from "@/components/attraction/AttractionList.vue";
             </div>
         </div>
     </header>
-    <div class="card card-body blur shadow-blur mx-3 mx-3 mx-md-4 mt-n6">
+    <div class="card card-body blur shadow-blur mx-3 mx-3 mx-md-4 mt-n6" style="min-height: 100vh">
         <section class="pt-3 pb-4" id="">
             <div class="container">
                 <!-- router view 설정 -->
