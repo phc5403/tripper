@@ -41,12 +41,8 @@
 		user_pwd = #{user_pwd}
 	</select>
 
-
-
-	<select id="findPassword" parameterType="String"
-		resultType="String">
-		select user_pwd from users where user_name = #{user_name} and user_id =
-		#{user_id}
+	<select id="findPassword" parameterType="String" resultType="String"> 
+		select user_pwd from users where user_name = #{user_name} and user_id = #{user_id} 
 	</select>
 
 	<select id="listUser" resultMap="userAll">
@@ -60,8 +56,7 @@
 
 	<select id="getUser" parameterType="String" resultMap="userAll">
 		select
-		user_id, user_name, user_pwd, user_email_id, user_email_domain,
-		user_join_date, user_status
+		user_id, user_name, user_pwd, user_email_id, user_email_domain, user_join_date, user_img, user_status
 		from users
 		where user_id = #{user_id}
 	</select>
@@ -72,6 +67,7 @@
 			<if test="user_pwd != null">user_pwd = #{user_pwd},</if>
 			<if test="user_email_id != null">user_email_id = #{user_email_id},</if>
 			<if test="user_email_domain != null">user_email_domain = #{user_email_domain},</if>
+			<if test="user_img != null">user_img = #{user_img},</if>
 		</trim>
 		where user_id = #{user_id}
 	</update>
@@ -83,8 +79,7 @@
 	</delete>
 
 	<select id="userInfo" parameterType="string" resultMap="user">
-		select
-		user_name, user_id, user_email_id, user_email_domain, user_join_date
+		select user_name, user_id, user_email_id, user_email_domain, user_img, user_join_date
 		from users where user_id = #{user_id}
 	</select>
 

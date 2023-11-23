@@ -260,10 +260,11 @@ public class UserController {
 //        @ApiImplicitParam(name = "user_name", value = "이름", required = true, dataType = "String", paramType = "query"),
 //        @ApiImplicitParam(name = "user_id", value = "아이디", required = true, dataType = "String", paramType = "query"),
 //    })
-	@GetMapping("/findpwd")
-	public ResponseEntity<String> findPassword(@RequestParam String user_name, @RequestParam String user_id) {
-		try {
-			// 이름과 아이디 기반 사용자 정보를 검색
+    @GetMapping("/findpwd")
+    public ResponseEntity<String> findPassword(@RequestParam String user_name, @RequestParam String user_id) {
+        try {
+            // 이름과 아이디 기반 사용자 정보를 검색
+
 //            UserDto userDto = userService.findPassword(user_name, user_id);
 			String temp = userService.findPassword(user_name, user_id);
 

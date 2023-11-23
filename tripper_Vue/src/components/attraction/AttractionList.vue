@@ -6,9 +6,8 @@ import { listSido, listGugun } from "@/api/map";
 import { listAttraction } from "@/api/attraction";
 import AttractionListItem from "@/components/attraction/item/AttractionListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
-// import VCheckBox from "@/components/common/VCheckBox.vue";
 import { useContentStore } from "@/stores/attractionInfo";
-import AttractionDetailModal from "@/components/attraction/item/AttractionDetailModal.vue";
+import AttractionDetailModal from "@/components/teleport/AttractionDetailModal.vue";
 
 const sidoList = ref([]);
 const gugunList = ref([{ text: "구군선택", value: "" }]);
@@ -163,11 +162,25 @@ const updateContent = (selectedContent) => {
 };
 
 // Modal
-const modalShow = ref(false);
+const mShow = ref(false);
 
-const openModal = function () {
-    modalShow.value = !modalShow.value;
-    console.log("모달 오픈! modalShow : " + modalShow.value);
+const cId = ref(0);
+const openModal = function (paramId) {
+    // 모달 생성
+    // mShow.value = true;
+    cId.value = paramId;
+    mShow.value = !mShow.value;
+
+    // if (mShow.value === false) {
+    //     mShow.value = true;
+    // }
+
+    console.log("openModal() : " + mShow.value);
+};
+
+const closeModal = function () {
+    mShow.value = !mShow.value;
+    console.log("closeModal() : " + mShow.value);
 };
 </script>
 
@@ -201,10 +214,9 @@ const openModal = function () {
                     <input class="form-check-input" type="checkbox" id="check_all" value="choiceAll" v-model="choiceAll" @change="checkAll" />
                     <label class="form-check-label" for="check_all">전체</label>
                 </div>
-                <div>?? : {{ choiceContent }}</div>
-                <div>{{ choiceAll }}</div>
+                <!-- <div>?? : {{ choiceContent }}</div> -->
+                <!-- <div>{{ choiceAll }}</div> -->
 
-                <!-- <VCheckBox @change-content="updateContent" :clickSearch="clickSearch" /> -->
                 <button class="btn btn-dark" type="button" @click="getlistAttraction">검색</button>
             </div>
 
@@ -216,6 +228,18 @@ const openModal = function () {
                         <VKakaoMap :attractions="visitAttractions" :selectAttraction="selectAttraction" />
                     </div>
                 </div>
+
+                <!-- Modal -->
+                <!-- <AttractionDetailModal :attractions="visitAttractions" :mShow="mShow" @closeBtn="closeModal" /> -->
+
+                <Teleport to="body">
+                    <!-- use the modal component, pass in the prop -->
+                    <AttractionDetailModal :cId="cId" :mShow="mShow" @closeBtn="mShow = false" :attractions="visitAttractions">
+                        <template #header>
+                            <h3>상세 설명</h3>
+                        </template>
+                    </AttractionDetailModal>
+                </Teleport>
 
                 <!-- 목록 리스트 -->
                 <div class="row">
@@ -245,7 +269,7 @@ const openModal = function () {
                                         :key="attraction.countent_id"
                                         @click="viewAttraction(attraction)"
                                         :attraction="attraction"
-                                        @openModal="openModal"
+                                        @handleImageClick="openModal"
                                     >
                                     </AttractionListItem>
                                 </tbody>

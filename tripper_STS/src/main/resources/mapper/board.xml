@@ -67,7 +67,7 @@
 	</select>
 	 
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
-		select b.board_no, b.user_id, b.board_title, b.board_content, b.board_hit, b.board_write_time, u.user_name 
+		select b.board_no, b.user_id, b.board_title, b.board_content, b.board_hit, b.board_write_time, u.user_name, u.user_img 
 		from board b, users u
 		where b.user_id = u.user_id
 		and b.board_no = ${board_no}

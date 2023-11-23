@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import { listArticle } from "@/api/board";
 
 import VSelect from "@/components/common/VSelect.vue";
-import BoardListItem from "@/components/board/item/BoardListItem.vue";
+import NoticeListItem from "@/components/notice/item/NoticeListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
 
 const router = useRouter();
@@ -38,7 +38,6 @@ const changeKey = (val) => {
 
 const getArticleList = () => {
   console.log("서버에서 글목록 얻어오자!!!", param.value);
-  console.log("검색한 내용은?", param.value.key, param.value.word);
   // API 호출
   listArticle(
     param.value,
@@ -71,15 +70,18 @@ const moveWrite = () => {
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <p class="fw-bold" style="font-size: 22px">정보 공유 게시판</p>
-        <hr width="100%" color="black" size="8" />
-        <p>소중한 여행 기록을 담는 공간이에요</p>
+        <h2 class="board-title my-3 py-3 shadow-sm bg-light text-center">
+          <mark class="sky">글목록</mark>
+        </h2>
       </div>
-      <div></div>
-      <div class="col-lg-10 mt-5">
+      <div class="col-lg-10">
         <div class="row align-self-center mb-2">
           <div class="col-md-2 text-start">
-            <button type="button" class="btn btn-outline-primary btn-sm" @click="moveWrite">
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              @click="moveWrite"
+            >
               글쓰기
             </button>
           </div>
@@ -91,16 +93,14 @@ const moveWrite = () => {
                   type="text"
                   class="form-control"
                   v-model="param.word"
-                  @keydown.enter.prevent="getArticleList"
                   placeholder="검색어..."
                 />
-                <button class="btn_sch" type="button" @click="getArticleList">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                    <path
-                      d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                    />
-                  </svg>
+                <button
+                  class="btn btn-dark"
+                  type="button"
+                  @click="getArticleList"
+                >
+                  검색
                 </button>
               </div>
             </form>
@@ -117,11 +117,11 @@ const moveWrite = () => {
             </tr>
           </thead>
           <tbody>
-            <BoardListItem
+            <NoticeListItem
               v-for="article in articles"
               :key="article.board_no"
               :article="article"
-            ></BoardListItem>
+            ></NoticeListItem>
           </tbody>
         </table>
       </div>
@@ -137,17 +137,5 @@ const moveWrite = () => {
 <style scoped>
 .board-title {
   border-radius: 0.75rem;
-}
-.btn_sch {
-  right: 0;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  height: auto;
-
-  background-size: 18px;
-}
-thead {
-  background-color: gray;
 }
 </style>

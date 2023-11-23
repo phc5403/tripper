@@ -35,7 +35,7 @@ import TheHeadingNavbar from "../components/layout/TheHeadingNavbar.vue";
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 500px;
+  height: 600px;
   background-size: cover;
   background-position: 50%;
   background-image: url("@/assets/bg1.png");
