@@ -251,3 +251,8 @@ insert into badword(fword)
 values("사과"),
 ("오렌지"),
 ("포도");
+
+update attraction_description set overview = "테마파크 25년 노하우의 롯데월드가 운영하는 국내 최대급의 워터파크로써 남태평양 폴리네시아를 배경으로 한 테마에서 아찔한 즐거움과 색다른 휴식을 느낄 수 있다." where content_id = 1921423;
+update attraction_info set first_image = "https://upload.wikimedia.org/wikipedia/ko/c/c4/%ED%95%9C%EA%B5%AD%EC%9D%98_%EC%A7%91.JPG" where content_id = 133350;
+update attraction_info set first_image = "https://img5.yna.co.kr/etc/inner/KR/2021/04/19/AKR20210419059500805_02_i_P4.jpg" where content_id = 1058437;
+update attraction_info set first_image = "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230528_200%2F1685272840190SmHKK_JPEG%2F20230528_201801.jpg" where content_id = 135685;

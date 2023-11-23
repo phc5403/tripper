@@ -12,10 +12,17 @@ import com.ssafy.trip.model.AttractionInfoDto;
 @Mapper
 public interface AttractionMapper {
 //	List<AttractionInfoDto> attractionList(int sido_code, int gugun_code) throws SQLException;
+//	List<AttractionInfoDto> attractionList(Map<String, Object> map) throws SQLException;
 	List<AttractionInfoDto> attractionList(Map<String, Object> map) throws SQLException;
+
 
 	List<AttractionInfoDto> searchByTitle(@Param("title") String title, @Param("sido_code") int sido_code, @Param("content_id") int content_id) throws Exception;
 	// 페이지 네이션
 //	int getTotalAttractionCount(Map<String, Object> param) throws SQLException;
 	int getTotalAttractionCount(Map<String, Object> param) throws SQLException;
+	
+	//인기 관광지 리스트
+	List<AttractionInfoDto> getPopularList() throws SQLException;
+	//인기 음식점 리스트
+	List<AttractionInfoDto> getStoreList() throws SQLException;
 }

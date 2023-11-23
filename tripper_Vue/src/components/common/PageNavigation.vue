@@ -4,7 +4,7 @@ import { computed } from "vue";
 const props = defineProps({ currentPage: Number, totalPage: Number });
 const emit = defineEmits(["pageChange"]);
 
-const navigationSize = parseInt(import.meta.env.VITE_ARTICLE_NAVIGATION_SIZE);
+const navigationSize = parseInt(import.meta.env.VITE_ARTICLE_NAVIGATION_SIZE); // 10
 
 const startPage = computed(() => {
     return parseInt((props.currentPage - 1) / navigationSize) * navigationSize + 1;

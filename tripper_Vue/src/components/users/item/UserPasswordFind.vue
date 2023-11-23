@@ -165,4 +165,7 @@ function findPwd() {
 .col-auto {
   justify-content: space-between;
 }
+.col-auto {
+    justify-content: space-between;
+}
 </style>

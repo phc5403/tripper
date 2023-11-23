@@ -72,11 +72,10 @@ public class TripController {
 		try {
 //			response.setContentType("application/json;charset=UTF-8");
 //			response.setCharacterEncoding("UTF-8");
-			System.out.println("-------------------------");
-			System.out.println(sido_code);
+//			System.out.println("-------------------------");
+//			System.out.println(sido_code);
 			List<TripDto> gugunList = tripService.getsGugunList(sido_code);
 			
-			ObjectMapper mapper = new ObjectMapper();
 //			mapper.writeValue(response.getWriter(), gugunList);
 			
 			return new ResponseEntity<List<TripDto>>(gugunList, HttpStatus.OK);
@@ -99,40 +98,22 @@ public class TripController {
 	@ApiOperation(value = "지역별 관광지 검색", notes = "<big>지역별 관광지 정보</big>를 보여줍니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "지역별 관광지 정보 OK!!"), @ApiResponse(code = 404, message = "해당 페이지가 없습니다."),
 		@ApiResponse(code = 500, message = "서버에러") })
-//	@PostMapping("/list")
 	@GetMapping("/list")
-//	public ResponseEntity<?> list(@RequestParam int sido_code, @RequestParam int gugun_code, @RequestBody @ApiParam(value = "여행 목록을 얻기위한 부가정보.", required = true) Map<String, String> map) {
-//	public ResponseEntity<?> list(@RequestBody @ApiParam(value = "여행 목록을 얻기위한 부가정보.", required = true) Map<String, String> map) {
-	public ResponseEntity<?> list(@RequestParam @ApiParam(value = "여행 목록을 얻기위한 부가정보.", required = true) Map<String, String> map) {
-
-		// @RequestParam int sido_code, @RequestParam int gugun_code, 
-		
+	public ResponseEntity<?> list(@RequestParam @ApiParam(value = "여행 목록을 얻기위한 부가정보.", required = true) Map<String, String> map, @RequestParam String choiceContent) {
 		// GET
 		// {pgno:1, spp:20, key:"", word:"" }
 		// {sido_code:1, gugun_code:1 pgno:2, spp:20, key:"", word:"" }
 		
-		
-		
-		// POST
-//		{
-//		  "pgno": "2",
-//		  "spp": "20",
-//		  "key": "",
-//		  "word": ""
-//		}
-		
-		// {"sido_code":1,"gugun_code":1,"pgno":1,"spp":"20","key":"","word":""}
-		
 		try {
-//			System.out.println("-- Trip Controller --");
+			System.out.println("-- Trip Controller --");
 //			System.out.println(map.get("sido_code") + ", " + map.get("pgno"));
-//			System.out.println(map.toString()); 
+			System.out.println(map.toString()); 
+			System.out.println(choiceContent);
 //			System.out.println(map.getClass().getTypeName());
 			
-//			AttractionListDto attractionListDto = attractionService.attractionList(sido_code, gugun_code, map);
-			AttractionListDto attractionListDto = attractionService.attractionList(map);
+//			AttractionListDto attractionListDto = attractionService.attractionList(map);
+			AttractionListDto attractionListDto = attractionService.attractionList(map, choiceContent);
 
-			System.out.println(attractionListDto.toString());
 			
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
@@ -146,7 +127,7 @@ public class TripController {
 	}
 	
 	@ApiOperation(value = "원하는 컨텐츠별 관광지 검색", notes = "<big>원하는 컨텐츠별 관광지 정보</big>를 보여줍니다.")
-	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "해당 페이지가 없습니다."),
+	@ApiResponses({ @ApiResponse(code = 200, message = "관광지 검색 OK!!"), @ApiResponse(code = 404, message = "해당 페이지가 없습니다."),
 		@ApiResponse(code = 500, message = "서버에러") })
 	@GetMapping("/search")
 //	@GetMapping
@@ -156,6 +137,37 @@ public class TripController {
 		return new ResponseEntity<List<AttractionInfoDto>>(list, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "인기 있는 관광지 TOP 3 가져오기", notes = "인기 있는 관광지 정보를 보여줍니다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "인기 관광지 목록 OK!!"), @ApiResponse(code = 404, message = "페이지없어!!"),
+		@ApiResponse(code = 500, message = "서버에러!!") })
+	@GetMapping("/popular")
+	public ResponseEntity<?> popularList(){
+		try {
+			List<AttractionInfoDto> list = attractionService.getPopularList();
+			System.out.println(list.toString());
+			
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(list);
+		}catch(Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@ApiOperation(value = "인기 있는 음식점 TOP 5 가져오기", notes = "인기 있는 음식점 정보를 보여줍니다.")
+	@GetMapping("/store")
+	public ResponseEntity<?> storeList(){
+		try {
+			List<AttractionInfoDto> list = attractionService.getStoreList();
+			System.out.println(list.toString());
+			
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(list);
+		}catch(Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 	
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
