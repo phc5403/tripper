@@ -52,6 +52,9 @@ public class AttractionInfoDto {
 	@ApiModelProperty(value = "mlevel")
 	private String mlevel;
 
+	@ApiModelProperty(value = "설명")
+	private String overview;
+	
 	public int getContent_id() {
 		return content_id;
 	}

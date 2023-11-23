@@ -114,4 +114,14 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionMapper.searchByTitle(title, sido_code, content_id);
 	}
 
+	@Override
+	public List<AttractionInfoDto> getPopularList() throws Exception {
+		 
+		return attractionMapper.getPopularList();
+	}
+
+	@Override
+	public List<AttractionInfoDto> getStoreList() throws Exception {
+		return attractionMapper.getStoreList();
+	}
 }
