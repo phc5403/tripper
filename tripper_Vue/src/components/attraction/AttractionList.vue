@@ -185,15 +185,14 @@ const closeModal = function () {
 </script>
 
 <template>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
     <main>
-        <div class="continer">
-            <!-- title -->
-            <div class="container text-center pb-3 mt-5 mb-3 w-25 border-bottom border-4">
-                <div class="fs-2 fw-semibold">지역별 관광정보</div>
-                <!-- <div>{{ store.contents[1].type }}</div> -->
+        <div class="container">
+            <div class="col-lg-12">
+                <p class="fw-bold" style="font-size: 40px">&#127757; 지역별 관광 정보</p>
+                <hr width="100%" color="black" size="8" />
             </div>
 
-            <!-- search : Sido, Gugun -->
             <div class="row mb-2">
                 <div class="col d-flex flex-row-reverse">
                     <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
@@ -203,85 +202,109 @@ const closeModal = function () {
                 </div>
             </div>
 
-            <!-- search : ContentType -->
             <div>
-                <div class="form-check form-check-inline" v-for="content in contents" :key="content.id">
-                    <input class="form-check-input" type="checkbox" :id="'check_' + content.id" :value="content.id" v-model="choiceContent" />
-                    <label class="form-check-label" :for="'check_' + content.id">{{ content.type }}</label>
+                <div
+                    class="form-check form-check-inline"
+                    v-for="content in contents"
+                    :key="content.id"
+                >
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        :id="'check_' + content.id"
+                        :value="content.id"
+                        v-model="choiceContent"
+                    />
+                    <label class="form-check-label" :for="'check_' + content.id">{{
+                        content.type
+                    }}</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="check_all" value="choiceAll" v-model="choiceAll" @change="checkAll" />
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="check_all"
+                        value="choiceAll"
+                        v-model="choiceAll"
+                        @change="checkAll"
+                    />
                     <label class="form-check-label" for="check_all">전체</label>
                 </div>
-                <!-- <div>?? : {{ choiceContent }}</div> -->
-                <!-- <div>{{ choiceAll }}</div> -->
 
                 <button class="btn btn-dark" type="button" @click="getlistAttraction">검색</button>
             </div>
 
-            <!-- map -->
-            <div class="container">
-                <div class="row">
-                    <div>
-                        <!-- <div id="map" class="container border w-100 shadow-sm"></div> -->
-                        <VKakaoMap :attractions="visitAttractions" :selectAttraction="selectAttraction" />
-                    </div>
+            <div class="container d-flex flex-row mt-3">
+                <div class="flex-grow-1">
+                    <VKakaoMap
+                        :attractions="visitAttractions"
+                        :selectAttraction="selectAttraction"
+                    />
                 </div>
 
-                <!-- Modal -->
-                <!-- <AttractionDetailModal :attractions="visitAttractions" :mShow="mShow" @closeBtn="closeModal" /> -->
+                <div class="flex-grow-2">
+                    <Teleport to="body">
+                        <AttractionDetailModal
+                            :cId="cId"
+                            :mShow="mShow"
+                            @closeBtn="mShow = false"
+                            :attractions="visitAttractions"
+                        >
+                        </AttractionDetailModal>
+                    </Teleport>
 
-                <Teleport to="body">
-                    <!-- use the modal component, pass in the prop -->
-                    <AttractionDetailModal :cId="cId" :mShow="mShow" @closeBtn="mShow = false" :attractions="visitAttractions">
-                        <template #header>
-                            <h3>상세 설명</h3>
-                        </template>
-                    </AttractionDetailModal>
-                </Teleport>
-
-                <!-- 목록 리스트 -->
-                <div class="row">
-                    <!-- <form class="d-flex">
-                        <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" v-model="param.word" placeholder="검색어..." />
-                            <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
-                        </div>
-                    </form> -->
-
-                    <!-- search list -->
-                    <div>
-                        <div id="search">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr class="text-center">
-                                        <th>대표이미지</th>
-                                        <th>관광지명</th>
-                                        <th>주소</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="trip-list">
-                                    <AttractionListItem
-                                        v-for="attraction in visitAttractions"
-                                        :key="attraction.countent_id"
-                                        @click="viewAttraction(attraction)"
-                                        :attraction="attraction"
-                                        @handleImageClick="openModal"
-                                    >
-                                    </AttractionListItem>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div style="overflow: auto; max-height: 500px" class="mb-3">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>대표이미지</th>
+                                    <th>관광지명</th>
+                                    <th>주소</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trip-list" style="height: auto">
+                                <AttractionListItem
+                                    v-for="attraction in visitAttractions"
+                                    :key="attraction.countent_id"
+                                    @click="viewAttraction(attraction)"
+                                    :attraction="attraction"
+                                    @handleImageClick="openModal"
+                                >
+                                </AttractionListItem>
+                            </tbody>
+                        </table>
                     </div>
+                    <PageNavigation
+                        :current-page="currentPage"
+                        :total-page="totalPage"
+                        @pageChange="onPageChange"
+                    ></PageNavigation>
                 </div>
-
-                <PageNavigation :current-page="currentPage" :total-page="totalPage" @pageChange="onPageChange"></PageNavigation>
             </div>
         </div>
     </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-grow-2 {
+    width: 400px;
+    height: 600px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+p {
+    font-family: "Dongle", sans-serif;
+}
+th {
+    font-family: "Dongle", sans-serif;
+    font-size: 24px;
+}
+</style>

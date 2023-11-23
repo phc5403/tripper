@@ -15,7 +15,10 @@ watch(
         // console.log("목록을 클릭하면 선택한 위치로 이동함.");
         // console.log(props.selectAttraction.value);
         // 이동할 위도 경도 위치를 생성합니다
-        var moveLatLon = new kakao.maps.LatLng(props.selectAttraction.latitude, props.selectAttraction.longitude);
+        var moveLatLon = new kakao.maps.LatLng(
+            props.selectAttraction.latitude,
+            props.selectAttraction.longitude
+        );
         console.log(moveLatLon);
 
         // 지도 중심을 부드럽게 이동시킵니다
@@ -169,7 +172,9 @@ const loadMarkers = () => {
         let ellipsis2 = document.createElement("div");
         ellipsis2.classList.add("jibun", "ellipsis");
         // ellipsis2.innerHTML = `(우) ${props.attractions[index].zipcode} (종류) ${props.attractions[index].content_type_id}`;
-        ellipsis2.innerHTML = `(우) ${props.attractions[index].zipcode} (종류) ${store.findType(props.attractions[index].content_type_id)}`;
+        ellipsis2.innerHTML = `(우) ${props.attractions[index].zipcode} (종류) ${store.findType(
+            props.attractions[index].content_type_id
+        )}`;
         desc.appendChild(ellipsis1);
         desc.appendChild(ellipsis2);
         body.appendChild(desc);
@@ -190,7 +195,10 @@ const loadMarkers = () => {
 
     // 4. 지도를 이동시켜주기 -> 마커가 한 화면에 모두 나오는 범위로 잡음.
     // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
-    const bounds = positions.value.reduce((bounds, position) => bounds.extend(position.latlng), new kakao.maps.LatLngBounds());
+    const bounds = positions.value.reduce(
+        (bounds, position) => bounds.extend(position.latlng),
+        new kakao.maps.LatLngBounds()
+    );
 
     map.setBounds(bounds);
 }; // loadMarkers()
@@ -440,7 +448,7 @@ const deleteMarkers = () => {
 <style>
 #map {
     width: 100%;
-    height: 700px;
+    height: 600px;
 }
 
 .wrap {

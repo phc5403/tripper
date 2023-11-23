@@ -14,21 +14,30 @@ const emitArgs = function () {
 </script>
 
 <template>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
     <tr class="text-center">
         <th @click.stop.prevent="emitArgs">
-            <img class="attrImg" v-if="attraction.first_image.length == 0" src="https://www.verdantis.com/wp-content/uploads/2016/04/noimg.jpg" />
-            <img class="attrImg" v-else :src="attraction.first_image" />
+            <div class="image-container">
+                <img
+                    class="attrImg"
+                    v-if="attraction.first_image.length == 0"
+                    src="https://www.verdantis.com/wp-content/uploads/2016/04/noimg.jpg"
+                />
+                <img class="attrImg" v-else :src="attraction.first_image" />
+            </div>
         </th>
 
-        <th>{{ attraction.title }}</th>
-        <td>{{ attraction.addr1 }}</td>
+        <th class="attrTitle" style="font-size: 10px">{{ attraction.title }}</th>
+        <td class="attrAddress" style="font-size: 10px">{{ attraction.addr1 }}</td>
     </tr>
 </template>
 
 <style scoped>
 .attrImg {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
 }
 
 /* .modal {
@@ -42,4 +51,9 @@ const emitArgs = function () {
     color: white;
     transform: translate(-50%, -50%);
 } */
+.image-container {
+    width: 100px; /* 이미지의 너비 */
+    height: 50px; /* 이미지의 높이 */
+    overflow: hidden;
+}
 </style>

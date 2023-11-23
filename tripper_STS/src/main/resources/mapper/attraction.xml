@@ -4,80 +4,114 @@
 
 <mapper namespace="com.ssafy.trip.model.mapper.AttractionMapper">
 
-	<select id="getTotalAttractionCount" parameterType="map" resultType="int">
+	<select id="getTotalAttractionCount" parameterType="map"
+		resultType="int">
 		select count(content_id)
 		from attraction_info
 		where
-		sido_code = #{sido_code}
+		sido_code
+		= #{sido_code}
 		and gugun_code = #{gugun_code}
 	</select>
+
+	<!-- AttractionInfoDto -->
+	<!-- <select id="attractionList" parameterType="map" resultType="AttractionInfoDto"> 
+		<if test="choiceContent == null"> 
+			select * 
+			from attraction_info 
+			where 
+			sido_code = #{sido_code} and gugun_code = #{gugun_code} 
+			order by content_type_id 
+			limit #{start}, #{listsize} 
+		</if> 
+		
+		<if test="choiceContent != null"> 
+			select * 
+			from attraction_info 
+			where sido_code = #{sido_code} and gugun_code = #{gugun_code} 
+			and content_type_id IN 
+			<foreach item="item" collection="choiceContent" open="(" close=")" separator=","> 
+				#{item} 
+			</foreach> 
+			order by content_type_id 
+			limit #{start}, #{listsize} 
+		</if> 
+		</select> -->
 
 	<!-- AttractionInfoDto -->
 	<select id="attractionList" parameterType="map"
 		resultType="AttractionInfoDto">
 		<if test="choiceContent == null">
-			select *
+			select i.content_id, i.content_type_id, i.title, i.addr1,
+			i.addr2, i.zipcode, i.tel, i.first_image, i.first_image2,
+			i.readcount, i.sido_code, i.gugun_code, i.latitude, i.longitude,
+			i.mlevel, d.overview
+			from attraction_description d, attraction_info i
+			where d.content_id IN
+			(
+			select content_id
 			from attraction_info
-			where
-			sido_code = #{sido_code}
-			and gugun_code = #{gugun_code}
-			order by content_type_id
+			where sido_code = #{sido_code} and gugun_code = #{gugun_code}
+			)
+			and d.content_id = i.content_id
+			order by i.content_type_id
 			limit #{start}, #{listsize}
 		</if>
 
 		<if test="choiceContent != null">
-			select *
-			from attraction_info
-			where
-			sido_code = #{sido_code}
-			and gugun_code = #{gugun_code}
-			and content_type_id IN
-			<foreach item="item" collection="choiceContent" open="(" close=")" separator=",">
-    		#{item}
- 			 </foreach>
-			order by content_type_id
-			limit #{start}, #{listsize}
+			select i.content_id, i.content_type_id, i.title, i.addr1, i.addr2, i.zipcode, i.tel, i.first_image, i.first_image2, i.readcount, i.sido_code, i.gugun_code, i.latitude, i.longitude, i.mlevel, d.overview
+			from attraction_description d, attraction_info i
+			where d.content_id IN 
+			(
+				select content_id
+				from attraction_info
+				where sido_code = #{sido_code} and gugun_code = #{gugun_code} 
+				and content_type_id IN 
+				<foreach item="item" collection="choiceContent" open="(" close=")" separator=",">
+					#{item}
+				</foreach>
+			)
+				and d.content_id = i.content_id
+				order by i.content_type_id
+				limit #{start}, #{listsize}
 		</if>
 	</select>
-	
+
 	<!-- 424개 중 상위 7개 출력 -->
-	<!-- 
-	select * from attraction_info
-	where sido_code = 1 and gugun_code= 1
-	order by content_type_id
-	limit 0, 7;
-	 -->
-	 <select id="getPopularList" resultType="AttractionInfoDto">
-	 	select i.content_id, i.title, i.addr1, i.readcount, i.content_type_id, i.first_image, d.overview
-		from attraction_info i, attraction_description d
-		where content_type_id = 12 and i.content_id = d.content_id
+	<!-- select * from attraction_info where sido_code = 1 and gugun_code= 1 
+		order by content_type_id limit 0, 7; -->
+		
+	<select id="getPopularList" resultType="AttractionInfoDto">
+		select i.content_id, i.title, i.addr1, i.readcount, i.content_type_id,
+		i.first_image, d.overview
+		from attraction_info i,
+		attraction_description d
+		where content_type_id = 12 and i.content_id =
+		d.content_id
 		order by readcount desc
 		limit 1,3;
-	 </select>
-	 
-	 <!-- <select id="getStoreList" resultType="AttractonInfoDto">
-	 	select content_id, title, addr1, readcount, first_image, content_type_id
-		from attraction_info
-		where content_type_id = 39
-		order by readcount desc;
-		limit 5;
-	 </select>
-	 -->
-	 <select id="getStoreList" resultType="AttractionInfoDto">
-	 	select content_id, title, addr1, content_type_id, first_image, readcount
+	</select>
+
+	<!-- <select id="getStoreList" resultType="AttractonInfoDto"> select content_id, 
+		title, addr1, readcount, first_image, content_type_id from attraction_info 
+		where content_type_id = 39 order by readcount desc; limit 5; </select> -->
+	<select id="getStoreList" resultType="AttractionInfoDto">
+		select content_id, title, addr1, content_type_id, first_image, readcount
 		from attraction_info
 		where content_type_id = 39
 		order by readcount desc
 		limit 5;
-	 </select>
-	 
+	</select>
+
 
 	<!-- [sido_code, content_id, title, param3, param1, param2] -->
 	<select id="searchByTitle" parameterType="hashMap"
 		resultType="AttractionInfoDto">
 		select *
 		from attraction_info
-		where title like concat('%', #{title}, '%')
-		and sido_code = ${sido_code} and content_type_id = ${content_id};
+		where title like concat('%',
+		#{title}, '%')
+		and sido_code = ${sido_code} and content_type_id =
+		${content_id};
 	</select>
 </mapper>
