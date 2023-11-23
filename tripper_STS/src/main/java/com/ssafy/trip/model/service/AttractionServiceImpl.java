@@ -124,5 +124,4 @@ public class AttractionServiceImpl implements AttractionService {
 	public List<AttractionInfoDto> getStoreList() throws Exception {
 		return attractionMapper.getStoreList();
 	}
- 
 }
