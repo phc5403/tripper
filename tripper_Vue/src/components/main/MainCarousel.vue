@@ -24,9 +24,10 @@ const getStorePopular = () => {
 </script>
 
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
   <div class="row justify-content-center">
     <div class="col-lg-12 mt-5 mb-5">
-      <p class="fw-bold" style="font-size: 22px">조회수가 가장 높은 관광지 TOP 5</p>
+      <p class="fw-bold" style="font-size: 40px">조회수가 가장 높은 맛집 리스트</p>
       <hr width="100%" color="black" size="8" />
       <p></p>
     </div>
@@ -56,10 +57,12 @@ const getStorePopular = () => {
           data-bs-interval="10000"
           :class="{ active: index === 0 }"
         >
+        <a :href="`https://map.kakao.com/?q=${encodeURIComponent(shop.title)}`" target="_blank" rel="noopener noreferrer">
           <img :src="shop.first_image" class="d-block w-100" alt="가게 이미지" />
+        </a>
           <div class="carousel-caption d-none d-md-block">
-            <h5>{{ shop.title }}</h5>
-            <p>{{ shop.addr1 }}</p>
+            <p style="font-size: 46px;">{{ shop.title }}</p>
+            <p style="font-size: 34px;">{{ shop.addr1 }}</p>
           </div>
         </div>
       </div>
@@ -94,5 +97,8 @@ img {
   display: table-cell;
   max-width: 100%;
   max-height: 100%;
+}
+p {
+  font-family: "Dongle", sans-serif;
 }
 </style>

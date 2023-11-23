@@ -6,16 +6,10 @@ import MainCarousel from "../components/main/MainCarousel.vue";
 
 <template>
     <header>
+        
         <div class="page-header">
             <span class="mask bg-gradient-primary opacity-4"></span>
             <TheHeadingNavbar></TheHeadingNavbar>
-            <div class="main-content">
-                <h1 class="text-white pt-3 mt-n5">안녕하세요.</h1>
-                <p class="lead text-white mt-3">
-                    SSAFY 10th <br />
-                    임시 화면입니다.
-                </p>
-            </div>
         </div>
     </header>
     <div class="card card-body blur shadow-blur mx-3 mx-3 mx-md-4 mt-n6">
@@ -41,10 +35,6 @@ import MainCarousel from "../components/main/MainCarousel.vue";
     background-size: cover;
     background-position: 50%;
     background-image: url("@/assets/bg1.png");
-}
-.main-content {
-    margin-top: 80px; /* 원하는 간격 설정 */
-    z-index: 1; /* 다른 요소 위로 올리기 위해 z-index 설정 */
 }
 
 .text-white {

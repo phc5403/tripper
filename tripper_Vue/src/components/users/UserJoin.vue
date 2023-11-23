@@ -141,12 +141,13 @@ function join() {
 </script>
 
 <template>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
     <div class="container">
         <div class="main border">
             <div>
                 <div>
                     <h4>
-                        <p class="bi bi-person-plus-fill">회원가입</p>
+                        <p class="bi bi-person-plus-fill" style="font-size: 40px;">회원가입</p>
                     </h4>
                     <br />
                 </div>
@@ -157,7 +158,7 @@ function join() {
                     </div>
                     <div class="mb-1">
                         <label for="input-id" class="form-label">아이디</label>
-                        <p v-show="idErrMsg" class="input-error float-end">
+                        <p v-show="idErrMsg" class="input-error float-end" style="font-size: 26px;">
                             {{ idErrMsg }}
                         </p>
                         <br />
@@ -165,7 +166,7 @@ function join() {
                     </div>
                     <div class="mb-1">
                         <label for="input-password" class="form-label">비밀번호</label>
-                        <p v-show="pwdErrMsg" class="input-error float-end">
+                        <p v-show="pwdErrMsg" class="input-error float-end" style="font-size: 26px;">
                             {{ pwdErrMsg }}
                         </p>
                         <br />
@@ -173,7 +174,7 @@ function join() {
                     </div>
                     <div class="mb-2">
                         <label for="password-check" class="form-label">비밀번호 확인</label>
-                        <p v-show="pwdCheckErrMsg" class="input-error float-end">
+                        <p v-show="pwdCheckErrMsg" class="input-error float-end" style="font-size: 26px;">
                             {{ pwdCheckErrMsg }}
                         </p>
                         <br />
@@ -182,7 +183,7 @@ function join() {
 
                     <div class="mb-3">
                         <label for="input-email" class="form-label">이메일</label>
-                        <p v-show="emailErrMsg" class="input-error float-end">
+                        <p v-show="emailErrMsg" class="input-error float-end" style="font-size: 26px;">
                             {{ emailErrMsg }}
                         </p>
                         <br />
@@ -200,8 +201,8 @@ function join() {
 
                     <div class="btns">
                         <br />
-                        <button type="submit" class="btn btn-outline-primary">회원가입</button>
-
+                        <button type="submit" class="btn btn-outline-primary me-2">회원가입</button>
+                        
                         <button type="reset" class="btn btn-outline-success">초기화</button>
                     </div>
                 </form>
@@ -227,7 +228,8 @@ function join() {
 .btns {
     display: flex;
     justify-content: center;
-    margin: auto;
+    /* margin: auto; */
+    
 }
 .main {
     align-items: center;
@@ -239,5 +241,20 @@ function join() {
 }
 .input-error {
     color: red;
+}
+p, span{
+    font-family: "Dongle", sans-serif;   
+}
+label{
+    font-family: "Dongle", sans-serif;
+    font-size: 30px;
+}
+input, option, select{
+    font-family: "Dongle", sans-serif;
+    font-size: 26px;
+}
+button{
+    font-family: "Dongle", sans-serif;
+    font-size: 22px;
 }
 </style>

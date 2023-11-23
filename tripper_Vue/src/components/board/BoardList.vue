@@ -68,12 +68,13 @@ const moveWrite = () => {
 </script>
 
 <template>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <p class="fw-bold" style="font-size: 22px">&#128203; 정보 공유 게시판</p>
+                <p class="fw-bold" style="font-size: 40px">&#128203; 정보 공유 게시판</p>
                 <hr width="100%" color="black" size="8" />
-                <p>소중한 여행 기록을 담는 공간이에요</p>
+                <p style="font-size: 28px;">소중한 여행 기록을 담는 공간이에요</p>
             </div>
             <div></div>
             <div class="col-lg-10 mt-5">
@@ -91,6 +92,7 @@ const moveWrite = () => {
                                     v-model="param.word"
                                     @keydown.enter.prevent="getArticleList"
                                     placeholder="검색어..."
+                                    style="font-size: 24px;"
                                 />
                                 <button class="btn_sch" type="button" @click="getArticleList">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -139,5 +141,16 @@ const moveWrite = () => {
 }
 thead {
     background-color: gray;
+}
+p {
+    font-family: "Dongle", sans-serif;
+}
+th{
+    font-family: "Dongle", sans-serif;
+    font-size: 28px;
+}
+button, input{
+    font-family: "Dongle", sans-serif;
+    font-size: 24px;
 }
 </style>

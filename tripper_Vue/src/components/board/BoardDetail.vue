@@ -91,10 +91,11 @@ function onDeleteArticle() {
 </script>
 
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
   <div class="container" style="min-height: 100vh">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <p class="fw-bold" style="font-size: 22px">
+        <p class="fw-bold" style="font-size: 40px">
           {{ article.board_no }}. {{ article.board_title }}
         </p>
         <hr width="100%" color="black" size="4" />
@@ -129,7 +130,7 @@ function onDeleteArticle() {
             <hr />
           </div>
           <div class="divider mb-3"></div>
-          <div class="" style="white-space: pre">
+          <div class="content" style="white-space: pre">
             {{ article.board_content }}
           </div>
 
@@ -152,7 +153,7 @@ function onDeleteArticle() {
             <button
               type="button"
               class="btn btn-outline-success mb-3 ms-1"
-              v-if="userInfo.user_id == article.user_id"
+              v-if="userInfo.user_id == article.user_id || userInfo.user_id == 'admin' "
               @click="moveModify"
             >
               글수정
@@ -160,7 +161,7 @@ function onDeleteArticle() {
             <button
               type="button"
               class="btn btn-outline-danger mb-3 ms-1"
-              v-if="userInfo.user_id == article.user_id"
+              v-if="userInfo.user_id == article.user_id  || userInfo.user_id == 'admin' "
               @click="onDeleteArticle"
             >
               글삭제
@@ -178,5 +179,20 @@ img {
   width: 50px;
   height: 50px;
   border-radius: 100%;
+}
+p{
+    font-family: "Dongle", sans-serif;   
+}
+label, span{
+    font-family: "Dongle", sans-serif;
+    font-size: 30px;
+}
+button{
+    font-family: "Dongle", sans-serif;
+    font-size: 24px;
+}
+.content{
+  font-family: "Dongle", sans-serif;
+    font-size: 26px;
 }
 </style>

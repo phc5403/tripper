@@ -209,22 +209,23 @@ function uploadImg(event) {
 </script>
 
 <template>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
     <form @submit.prevent="onSubmit">
-        <p class="fw-bold" style="font-size: 22px">&#128161; 내 정보</p>
+        <p class="fw-bold" style="font-size: 40px">&#128161; 내 정보</p>
         <div class="my-page border bg-white bg-gradient">
             <div class="item1">
                 <img v-if="user.user_img" :src="user.user_img" />
-                <p>{{ user.user_name }}님 반갑습니다 👋</p>
+                <p style="font-size: 28px;">{{ user.user_name }}님 반갑습니다 👋</p>
                 <!-- <button class="btn btn-outline-primary btn-sm">이미지 업로드</button> -->
                 <label class="file-input-label">
-                    <span>이미지 업로드</span>
+                    <span style="font-size: 20px;">이미지 업로드</span>
                     <input type="file" @change="uploadImg" accept="image/*" class="file-input" />
                 </label>
             </div>
             <div class="item2">
                 <div class="user-info border">
                     <div>
-                        <label for="username" class="form-label">이름</label>
+                        <label for="username" class="form-label" >이름</label>
                         <input type="text" class="form-control" v-model="user.user_name" disabled />
                         <label for="userid" class="form-label">아이디</label>
                         <input type="text" class="form-control" v-model="user.user_id" disabled />
@@ -233,7 +234,7 @@ function uploadImg(event) {
                         <label for="useremail" class="form-label">이메일</label>
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="user.user_email_id" />
-                            <span class="input-group-text">@</span>
+                            <span class="input-group-text" style="height: 52.33px;">@</span>
                             <input type="text" class="form-control" v-model="user.user_email_domain" />
                         </div>
                         <div>
@@ -312,5 +313,20 @@ img {
     background-color: #f5f5f5;
     color: #333;
     cursor: pointer;
+}
+p, span{
+    font-family: "Dongle", sans-serif;   
+}
+label{
+    font-family: "Dongle", sans-serif;
+    font-size: 30px;
+}
+input{
+    font-family: "Dongle", sans-serif;
+    font-size: 26px;
+}
+button{
+    font-family: "Dongle", sans-serif;
+    font-size: 22px;
 }
 </style>

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { registArticle, getModifyArticle, modifyArticle } from "@/api/board";
+import { registNotice, getModifyNotice, modifyNotice } from "@/api/notice";
 import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
 
@@ -10,43 +10,42 @@ const route = useRoute();
 
 const props = defineProps({ type: String });
 const isUseId = ref(true);
-const { articleno } = route.params;
+const { noticeno } = route.params;
 
 const MemberStore = useMemberStore();
 const { userInfo } = storeToRefs(MemberStore);
 
-const article = ref({
-  board_no: 0,
+const notice = ref({
+  notice_no: 0,
   user_id: userInfo.value.user_id,
   user_name: "",
-  board_title: "",
-  board_content: "",
-  board_hit: 0,
-  board_write_time: "",
-  // fileInfos: "",
+  notice_title: "",
+  notice_content: "",
+  notice_hit: 0,
+  notice_write_time: "",
 });
 
 console.log("====================");
 console.log("글 작성자");
 console.log(userInfo.value);
 console.log(userInfo.value.user_id); // user_id 뽑기
-console.log(article.user_id); // undefined
+// console.log(article.user_id); // undefined
 
 if (props.type === "modify") {
-  console.log(articleno + "번글 얻어와서 수정할거야");
+  console.log(noticeno + "번 공지글 얻어와서 수정할거야");
   // ???????
   // API 호출
   isUseId.value = true;
   console.log(userInfo.value.user_id); // ssafy != admin
-  getModifyArticle(
-    articleno,
+  getModifyNotice(
+    noticeno,
     ({ data }) => {
       console.log(data); // 수정할 대상의 데이터
-      article.value.board_no = articleno;
-      article.value.user_id = data.user_id;
-      article.value.board_title = data.board_title;
-      article.value.board_content = data.board_content;
-      // article.value.fileInfos = data.fileInfos;
+      notice.value.notice_no = noticeno;
+      notice.value.user_id = data.user_id;
+      notice.value.notice_title = data.notice_title;
+      notice.value.notice_content = data.notice_content;
+      notice.value.fileInfos = data.fileInfos;
     },
     (error) => {
       console.log(error);
@@ -57,7 +56,7 @@ if (props.type === "modify") {
 const titleErrMsg = ref("");
 const contentErrMsg = ref("");
 watch(
-  () => article.value.board_title,
+  () => notice.value.notice_title,
   (value) => {
     console.log(value);
     let len = value.length;
@@ -68,7 +67,7 @@ watch(
   { immediate: true }
 );
 watch(
-  () => article.value.board_content,
+  () => notice.value.notice_content,
   (value) => {
     let len = value.length;
     if (len == 0 || len > 500) {
@@ -86,15 +85,31 @@ function onSubmit() {
   } else if (contentErrMsg.value) {
     alert(contentErrMsg.value);
   } else {
-    props.type === "regist" ? writeArticle() : updateArticle();
+    props.type === "regist" ? writeNotice() : updateNotice();
   }
 }
 
-function writeArticle() {
-  console.log("글등록하자!!", article.value);
+function writeNotice() {
+  console.log("공지글 등록하자!!", notice.value);
+
+
+  // const formData = new FormData(); // FormData 객체 생성
+  // formData.append("user_id", article.value.user_id);
+  // formData.append("board_title", article.value.board_title);
+  // formData.append("board_content", article.value.board_content);
+
+  // const upfileInput = document.getElementById("upfile"); // 파일 입력 요소 가져오기
+  // const files = upfileInput.files; // 선택된 파일들
+
+  // for (let i = 0; i < files.length; i++) {
+  //   formData.append("upfile", files[i]); // FormData에 파일 추가
+  // }
+
+  // console.log("폼 보내자!!", formData);
+  // console.log("이거맞나", formData.get("upfile"));
   // API 호출
-  registArticle(
-    article.value,
+  registNotice(
+    notice.value,
     (response) => {
       let msg = "글등록 처리시 문제 발생했습니다.";
       if (response.status == 202) {
@@ -113,11 +128,11 @@ function writeArticle() {
   );
 }
 
-function updateArticle() {
-  console.log(articleno + "번글 수정하자!!", article.value);
+function updateNotice() {
+  console.log(noticeno + "번글 수정하자!!", notice.value);
   // API 호출
-  modifyArticle(
-    article.value,
+  modifyNotice(
+    notice.value,
     // article.value.board_no,
     (response) => {
       // console.log(data);
@@ -138,64 +153,67 @@ function updateArticle() {
 }
 
 function moveList() {
-  router.push({ name: "article-list" });
+  router.push({ name: "notice-list" });
 }
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
+  <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
+  <form @submit.prevent="onSubmit" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="userid" class="form-label">작성자 ID : </label>
       <!-- <input type="text" class="form-control" v-model="article.user_id" :disabled="isUseId" placeholder="작성자ID..." /> -->
-      <input
-        type="text"
-        class="form-control"
-        v-model="article.user_id"
-        :disabled="isUseId"
-      />
+      <input type="text" class="form-control" v-model="notice.user_id" :disabled="isUseId" />
     </div>
     <div class="mb-3">
-      <label for="board_title" class="form-label">제목 : </label>
-      <input
-        type="text"
-        class="form-control"
-        v-model="article.board_title"
-        placeholder="제목..."
-      />
+      <label for="notice_title" class="form-label">제목 : </label>
+      <input type="text" class="form-control" v-model="notice.notice_title" placeholder="제목..." />
     </div>
     <div class="mb-3">
-      <label for="board_content" class="form-label">내용 : </label>
-      <textarea
-        class="form-control"
-        v-model="article.board_content"
-        rows="10"
-      ></textarea>
+      <label for="notice_content" class="form-label">내용 : </label>
+      <textarea class="form-control" v-model="notice.notice_content" rows="10"></textarea>
     </div>
+    <!-- <div class="mb-3">
+      <label for="upfile" class="form-label">파일 : </label>
+      <input
+        type="file"
+        class="form-control border"
+        id="upfile"
+        name="upfile"
+        multiple="multiple"
+      />
+    </div> -->
 
     <!-- <div class="mb-3">
             <label for="upfile" class="form-label">파일:</label>
             <input type="file" class="form-control border" id="upfile" name="upfile" multiple="multiple" />
         </div> -->
     <div class="col-auto text-center">
-      <button
-        type="submit"
-        class="btn btn-outline-primary mb-3"
-        v-if="type === 'regist'"
-      >
+      <button type="submit" class="btn btn-outline-primary mb-3" v-if="type === 'regist'">
         글작성
       </button>
-      <button type="submit" class="btn btn-outline-success mb-3" v-else>
-        글수정
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-danger mb-3 ms-1"
-        @click="moveList"
-      >
+      <button type="submit" class="btn btn-outline-success mb-3" v-else>글수정</button>
+      <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="moveList">
         목록으로이동...
       </button>
     </div>
   </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+p{
+    font-family: "Dongle", sans-serif;   
+}
+label{
+    font-family: "Dongle", sans-serif;
+    font-size: 30px;
+}
+input, textarea{
+    font-family: "Dongle", sans-serif;
+    font-size: 26px;
+}
+button{
+    font-family: "Dongle", sans-serif;
+    font-size: 24px;
+}
+</style>

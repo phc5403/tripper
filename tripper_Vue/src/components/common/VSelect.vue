@@ -12,6 +12,7 @@ const onSelect = () => {
 </script>
 
 <template>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
     <select v-model="key" class="form-select form-select-sm ms-5 me-1 w-50" @change="onSelect">
         <option
             v-for="option in selectOption"
@@ -24,4 +25,9 @@ const onSelect = () => {
     </select>
 </template>
 
-<style scoped></style>
+<style scoped>
+select, option{
+    font-family: "Dongle", sans-serif;
+    font-size: 24px;
+}
+</style>

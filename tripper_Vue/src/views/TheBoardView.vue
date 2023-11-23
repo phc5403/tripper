@@ -7,13 +7,7 @@ import TheHeadingNavbar from "../components/layout/TheHeadingNavbar.vue";
     <div class="page-header">
       <span class="mask bg-gradient-primary opacity-4"></span>
       <TheHeadingNavbar></TheHeadingNavbar>
-      <div class="main-content">
-        <h1 class="text-white pt-3 mt-n5">안녕하세요.</h1>
-        <p class="lead text-white mt-3">
-          SSAFY 10th <br />
-          임시 화면입니다.
-        </p>
-      </div>
+      
     </div>
   </header>
   <div class="card card-body blur shadow-blur mx-3 mx-3 mx-md-4 mt-n6">

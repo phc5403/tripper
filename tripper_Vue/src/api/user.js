@@ -9,7 +9,7 @@ function joinUser(user, success, fail) {
 
 function userIdCheck(userid, success, fail) {
     console.log("userid", userid);
-    local.get(`/user/idcheck/${userid}`).then(success).catch(fail);
+    local.get(`/user/${userid}`).then(success).catch(fail);
 }
 
 function getModifyUser(userid, success, fail) {
@@ -23,20 +23,6 @@ function modifyUser(user, success, fail) {
 function deleteUser(userid, success, fail) {
     local.delete(`/user/${userid}`).then(success).catch(fail);
 }
-
-function findUserPwd(param, success, fail) {
-    console.log("params", param);
-    console.log("params json", JSON.stringify(param));
-    local.get(`/user/findpwd`, { params: param }).then(success).catch(fail);
-    console.log("?ㄴㄴ");
-}
-
-// function findUserPwd(param, success, fail) {
-//   console.log("params", param);
-//   console.log("params json", JSON.stringify(param));
-//   local.get(`/user/findpwd`, { params: param }).then(success).catch(fail);
-//   console.log("?ㄴㄴ");
-// }
 
 function findUserPwd(param, success, fail) {
     console.log("params", param);

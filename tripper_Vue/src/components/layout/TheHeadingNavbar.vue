@@ -27,7 +27,7 @@ const logout = () => {
     <div class="container">
       <router-link to="/">
         <img
-          src="@/assets/ssafy_logo.png"
+          src="@/assets/tripper-removebg-preview.png"
           class="rounded mx-auto d-block w-75"
           alt="..."
         />
@@ -143,5 +143,9 @@ nav {
   margin-top: 1px;
   padding: 20px; /* 원하는 여백 추가 */
   width: 100%; /* 화면 너비에 맞게 설정 */
+}
+img{
+  height: 60px;
+  
 }
 </style>

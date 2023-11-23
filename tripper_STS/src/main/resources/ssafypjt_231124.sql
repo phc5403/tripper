@@ -177,8 +177,12 @@ CREATE TABLE IF NOT EXISTS `ssafypjt`.`notice` (
   `notice_content` VARCHAR(2000) NULL DEFAULT NULL,
   `notice_hit` INT NULL DEFAULT '0',
   `notice_write_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`notice_no`))
+  PRIMARY KEY (`notice_no`),
+  CONSTRAINT `notice_to_users_user_id_fk`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ssafypjt`.`users` (`user_id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
@@ -247,10 +251,22 @@ values ("ssafy", "제목 11", "내용 11"),
 ("admin", "관리자-제목 11", "관리자-내용 11"),
 ("admin", "관리자-제목 22", "관리자-내용 22");
 
+insert into notice(user_id, notice_title, notice_content) 
+values ("admin", "공지 제목 11", "공지 내용 11"),
+("admin", "공지 제목 22", "공지 내용 22"),
+("admin", "공지 제목 33", "공지 내용 33"),
+("admin", "공지 제목 44", "공지 내용 44"),
+("admin", "공지 제목 55", "공지 내용 55"),
+("admin", "공지 제목 66", "공지 내용 66"),
+("admin", "공지 제목 77", "공지 내용 77"),
+("admin", "공지 제목 88", "공지 내용 88"),
+("admin", "공지 제목 99", "공지 내용 99"),
+("admin", "공지 제목 10", "공지 내용 10");
+
 insert into badword(fword) 
-values("사과"),
-("오렌지"),
-("포도");
+values("상혁"),
+("나연"),
+("혜린");
 
 update attraction_description set overview = "테마파크 25년 노하우의 롯데월드가 운영하는 국내 최대급의 워터파크로써 남태평양 폴리네시아를 배경으로 한 테마에서 아찔한 즐거움과 색다른 휴식을 느낄 수 있다." where content_id = 1921423;
 update attraction_info set first_image = "https://upload.wikimedia.org/wikipedia/ko/c/c4/%ED%95%9C%EA%B5%AD%EC%9D%98_%EC%A7%91.JPG" where content_id = 133350;

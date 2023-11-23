@@ -4,38 +4,39 @@ const local = localAxios();
 
 const url = "/notice";
 
-function listArticle(param, success, fail) {
+function listNotice(param, success, fail) {
+  console.log("notice.js -> listNocie :: ", param);
   local.get(`${url}`, { params: param }).then(success).catch(fail);
 }
 
-function detailArticle(articleno, success, fail) {
-  local.get(`${url}/${articleno}`).then(success).catch(fail);
+function detailNotice(noticeno, success, fail) {
+  local.get(`${url}/${noticeno}`).then(success).catch(fail);
 }
 
-function registArticle(article, success, fail) {
-  console.log("notice.js -> registArticle :: ", JSON.stringify(article));
-  local.post(`${url}`, JSON.stringify(article)).then(success).catch(fail);
+function registNotice(notice, success, fail) {
+  console.log("notice.js -> registNotice :: ", JSON.stringify(notice));
+  local.post(`${url}`, JSON.stringify(notice)).then(success).catch(fail);
   console.log("notice.js -> 보여주나연?");
 }
 
-function getModifyArticle(articleno, success, fail) {
-  local.get(`${url}/modify/${articleno}`).then(success).catch(fail);
+function getModifyNotice(noticeno, success, fail) {
+  local.get(`${url}/modify/${noticeno}`).then(success).catch(fail);
 }
 
-function modifyArticle(article, success, fail) {
-  console.log("notice.js --> ", article);
-  local.put(`${url}`, JSON.stringify(article)).then(success).catch(fail);
+function modifyNotice(notice, success, fail) {
+  console.log("notice.js --> ", notice);
+  local.put(`${url}`, JSON.stringify(notice)).then(success).catch(fail);
 }
 
-function deleteArticle(articleno, success, fail) {
-  local.delete(`${url}/${articleno}`).then(success).catch(fail);
+function deleteNotice(noticeno, success, fail) {
+  local.delete(`${url}/${noticeno}`).then(success).catch(fail);
 }
 
 export {
-  listArticle,
-  detailArticle,
-  registArticle,
-  getModifyArticle,
-  modifyArticle,
-  deleteArticle,
+  listNotice,
+  detailNotice,
+  registNotice,
+  getModifyNotice,
+  modifyNotice,
+  deleteNotice,
 };
