@@ -20,4 +20,9 @@ public interface AttractionMapper {
 	// 페이지 네이션
 //	int getTotalAttractionCount(Map<String, Object> param) throws SQLException;
 	int getTotalAttractionCount(Map<String, Object> param) throws SQLException;
+	
+	//인기 관광지 리스트
+	List<AttractionInfoDto> getPopularList() throws SQLException;
+	//인기 음식점 리스트
+	List<AttractionInfoDto> getStoreList() throws SQLException;
 }
