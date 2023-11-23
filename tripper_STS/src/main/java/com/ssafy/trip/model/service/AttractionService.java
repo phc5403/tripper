@@ -1,5 +1,6 @@
 package com.ssafy.trip.model.service;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,4 +14,8 @@ public interface AttractionService {
 
 
 	List<AttractionInfoDto> searchByTitle(String title, int sido_code, int content_id) throws Exception;
+	
+	List<AttractionInfoDto> getPopularList() throws Exception;
+	
+	List<AttractionInfoDto> getStoreList() throws Exception;
 }

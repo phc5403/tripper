@@ -71,7 +71,7 @@ const moveWrite = () => {
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <p class="fw-bold" style="font-size: 22px">정보 공유 게시판</p>
+        <p class="fw-bold" style="font-size: 22px">&#128203; 정보 공유 게시판</p>
         <hr width="100%" color="black" size="8" />
         <p>소중한 여행 기록을 담는 공간이에요</p>
       </div>

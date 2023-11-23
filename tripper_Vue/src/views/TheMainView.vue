@@ -1,5 +1,7 @@
 <script setup>
 import TheHeadingNavbar from "@/components/layout/TheHeadingNavbar.vue";
+import MainPopularCard from "../components/main/MainPopularCard.vue";
+import MainCarousel from "../components/main/MainCarousel.vue";
 </script>
 
 <template>
@@ -19,46 +21,8 @@ import TheHeadingNavbar from "@/components/layout/TheHeadingNavbar.vue";
   <div class="card card-body blur shadow-blur mx-3 mx-3 mx-md-4 mt-n6">
     <section class="pt-3 pb-4" id="">
       <div class="container">
-        <div class="popular-attraction">
-          <h2>올해 최고의 인기 관광지</h2>
-          <div class="col-lg-12 mx-auto py-3">
-            <div class="row">
-              <div class="col-md-4 position-relative">
-                <div class="p-3 text-center">
-                  <img
-                    src="../assets/gwanganri.jpg"
-                    style="width: 300px; height: 200px; object-fit: cover"
-                  />
-                  <h3>광안리 해수욕장</h3>
-                  <h5 class="mt-3">경상남도 부산광역시</h5>
-                </div>
-                <hr class="vertical dark" />
-              </div>
-              <div class="col-md-4 position-relative">
-                <div class="p-3 text-center">
-                  <img
-                    src="../assets/mola.jpg"
-                    style="width: 300px; height: 200px; object-fit: cover"
-                  />
-                  <h3>여수</h3>
-                  <h5 class="mt-3">전라남도 여수시</h5>
-                </div>
-                <hr class="vertical dark" />
-              </div>
-              <div class="col-md-4 position-relative">
-                <div class="p-3 text-center">
-                  <img
-                    src="../assets/gangneung.jpg"
-                    style="width: 300px; height: 200px; object-fit: cover"
-                  />
-                  <h3>강릉</h3>
-                  <h5 class="mt-3">강원도 강릉시 전상혁</h5>
-                </div>
-                <hr class="vertical dark" />
-              </div>
-            </div>
-          </div>
-        </div>
+        <MainPopularCard></MainPopularCard>
+        <MainCarousel></MainCarousel>
       </div>
     </section>
   </div>
@@ -73,7 +37,7 @@ import TheHeadingNavbar from "@/components/layout/TheHeadingNavbar.vue";
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 600px;
+  height: 450px;
   background-size: cover;
   background-position: 50%;
   background-image: url("@/assets/bg1.png");

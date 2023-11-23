@@ -210,11 +210,11 @@ function uploadImg(event) {
 
 <template>
   <form @submit.prevent="onSubmit">
-    <p class="fw-bold">내 정보</p>
+    <p class="fw-bold" style="font-size: 22px">&#128161; 내 정보</p>
     <div class="my-page border bg-white bg-gradient">
       <div class="item1">
         <img v-if="user.user_img" :src="user.user_img" />
-        <p>{{ user.user_name }}님 반갑습니다 :)</p>
+        <p>{{ user.user_name }}님 반갑습니다 👋</p>
         <!-- <button class="btn btn-outline-primary btn-sm">이미지 업로드</button> -->
         <label class="file-input-label">
           <span>이미지 업로드</span>
