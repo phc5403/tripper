@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.notice.model.mapper.NoticeMapper">
+	<resultMap type="noticeDto" id="notice">
+		<result column="notice_no" property="notice_no" />
+		<result column="user_id" property="user_id" />
+		<result column="notice_title" property="notice_title" />
+		<result column="notice_content" property="notice_content" />
+		<result column="notice_hit" property="notice_hit" />
+		<result column="notice_write_time" property="notice_write_time" />
+	</resultMap>
+
+	<insert id="writeNotice" parameterType="noticeDto">
+		insert into notice (user_id, notice_title, notice_content, notice_hit,
+		notice_write_time)
+		values (#{user_id}, #{notice_title},
+		#{notice_content},
+		0, now())
+		<selectKey resultType="int" keyProperty="notice_no"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'notice_title'">
+				and notice_title like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'notice_title'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+	<select id="listNotice" parameterType="map" resultMap="notice">
+		select n.notice_no, n.user_id, n.notice_title, n.notice_content,
+		n.notice_hit, n.notice_write_time, u.user_name
+		from notice n, users u
+		where n.user_id = u.user_id
+		<include refid="search"></include>
+		order by n.notice_no desc
+		limit #{start}, #{listsize}
+	</select>
+
+	<select id="getTotalNoticeCount" parameterType="map"
+		resultType="int">
+		select count(notice_no)
+		from notice
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+
+	<select id="getNotice" parameterType="int"
+		resultMap="notice">
+		select n.notice_no, n.user_id, n.notice_title,
+		n.notice_content, n.notice_hit, n.notice_write_time, u.user_name,
+		u.user_img
+		from notice n, users u
+		where n.user_id = u.user_id
+		and	n.notice_no = ${notice_no}
+	</select>
+
+
+	<update id="updateHit" parameterType="int">
+		update notice
+		set notice_hit
+		=
+		notice_hit + 1
+		where notice_no = ${notice_no}
+	</update>
+
+	<update id="modifyNotice" parameterType="noticeDto">
+		update notice
+		set
+		notice_title = #{notice_title}, notice_content = #{notice_content}
+		where
+		notice_no = ${notice_no}
+	</update>
+
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice
+		where
+		notice_no = ${notice_no}
+	</delete>
+
+</mapper>

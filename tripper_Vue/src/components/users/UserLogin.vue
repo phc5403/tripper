@@ -60,12 +60,13 @@ const moveUserPasswordFind = () => {
 </script>
 
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
   <div class="container">
     <div class="main border">
       <div>
         <div>
           <h4>
-            <p class="bi bi-person-plus-fill">로그인</p>
+            <p class="bi bi-person-plus-fill" style="font-size: 40px;">로그인</p>
           </h4>
           <br />
         </div>
@@ -88,7 +89,7 @@ const moveUserPasswordFind = () => {
             <label for="userpwd" class="form-label">비밀번호</label><br />
 
             <input
-              type="text"
+              type="password"
               class="form-control"
               v-model="loginUser.user_pwd"
               @keyup.enter="login"
@@ -137,8 +138,24 @@ const moveUserPasswordFind = () => {
   border-color: white;
 }
 .btn-find {
-  font-size: 12px;
+  font-family: "Dongle", sans-serif;
+  font-size: 24px;
   border: none;
   background-color: whitesmoke;
+}
+p, span{
+    font-family: "Dongle", sans-serif;   
+}
+label{
+    font-family: "Dongle", sans-serif;
+    font-size: 30px;
+}
+input{
+    font-family: "Dongle", sans-serif;
+    font-size: 26px;
+}
+button{
+    font-family: "Dongle", sans-serif;
+    font-size: 24px;
 }
 </style>

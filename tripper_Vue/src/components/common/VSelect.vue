@@ -26,8 +26,7 @@ const onSelect = () => {
 </template>
 
 <style scoped>
-select,
-option {
+select, option{
     font-family: "Dongle", sans-serif;
     font-size: 24px;
 }

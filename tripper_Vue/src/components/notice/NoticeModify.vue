@@ -3,12 +3,12 @@ import NoticeFormItem from "./item/NoticeFormItem.vue";
 </script>
 
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글수정</mark>
-        </h2>
+        <p class="fw-bold" style="font-size: 40px">공지글 수정</p>
+        <hr width="100%" color="black" size="4" />
       </div>
       <div class="col-lg-10 text-start">
         <NoticeFormItem type="modify" />
@@ -17,4 +17,8 @@ import NoticeFormItem from "./item/NoticeFormItem.vue";
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+p {
+  font-family: "Dongle", sans-serif;
+}
+</style>

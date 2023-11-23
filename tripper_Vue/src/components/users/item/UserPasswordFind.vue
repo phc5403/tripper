@@ -71,6 +71,10 @@ function findPwd() {
   );
 }
 
+function mvLogin(){
+  router.push("/user/login")
+}
+
 // function findPwd() {
 //   console.log("찾을 유저의 정보는? " + user.value.user_name, user.value.user_id);
 //   findUserPwd(
@@ -88,12 +92,13 @@ function findPwd() {
 </script>
 
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
   <div class="container">
     <div class="main border">
       <div>
         <div>
           <h4>
-            <p class="bi bi-person-plus-fill">비밀번호 찾기</p>
+            <p class="bi bi-person-plus-fill" style="font-size: 40px;">비밀번호 찾기</p>
           </h4>
           <br />
         </div>
@@ -120,8 +125,8 @@ function findPwd() {
           </div>
 
           <div class="col-auto text-center mt-3">
-            <button type="submit" class="btn btn-primary mb-3">찾기</button>
-            <button type="button" class="btn btn-primary mb-3">뒤로</button>
+            <button type="submit" class="btn btn-primary mb-3 me-2">찾기</button>
+            <button type="button" class="btn btn-primary mb-3" @click="mvLogin">뒤로</button>
           </div>
         </form>
       </div>
@@ -167,5 +172,21 @@ function findPwd() {
 }
 .col-auto {
     justify-content: space-between;
+}
+p, span{
+    font-family: "Dongle", sans-serif;   
+}
+label{
+    font-family: "Dongle", sans-serif;
+    font-size: 30px;
+}
+input{
+    font-family: "Dongle", sans-serif;
+    font-size: 26px;
+}
+button{
+    font-family: "Dongle", sans-serif;
+    font-size: 24px;
+    
 }
 </style>

@@ -9,7 +9,7 @@ function joinUser(user, success, fail) {
 
 function userIdCheck(userid, success, fail) {
     console.log("userid", userid);
-    local.get(`/user/idcheck/${userid}`).then(success).catch(fail);
+    local.get(`/user/${userid}`).then(success).catch(fail);
 }
 
 function getModifyUser(userid, success, fail) {

@@ -157,6 +157,7 @@ function moveList() {
 </script>
 
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
   <form @submit.prevent="onSubmit" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="userid" class="form-label">작성자 ID : </label>
@@ -198,4 +199,20 @@ function moveList() {
   </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+p{
+    font-family: "Dongle", sans-serif;   
+}
+label{
+    font-family: "Dongle", sans-serif;
+    font-size: 30px;
+}
+input, textarea{
+    font-family: "Dongle", sans-serif;
+    font-size: 26px;
+}
+button{
+    font-family: "Dongle", sans-serif;
+    font-size: 24px;
+}
+</style>
