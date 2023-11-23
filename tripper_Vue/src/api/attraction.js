@@ -42,4 +42,3 @@ function listStore(success, fail) {
 }
 
 export { listAttraction, listPopular, listStore };
- 

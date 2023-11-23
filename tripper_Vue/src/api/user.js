@@ -51,4 +51,15 @@ async function logout(userid, success, fail) {
     await local.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
-export { joinUser, userIdCheck, userConfirm, getModifyUser, modifyUser, deleteUser, findUserPwd, findById, tokenRegeneration, logout };
+export {
+    joinUser,
+    userIdCheck,
+    userConfirm,
+    getModifyUser,
+    modifyUser,
+    deleteUser,
+    findUserPwd,
+    findById,
+    tokenRegeneration,
+    logout,
+};
