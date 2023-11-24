@@ -14,7 +14,6 @@ const emitArgs = function () {
 </script>
 
 <template>
-    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet" />
     <tr class="text-center">
         <th @click.stop.prevent="emitArgs">
             <div class="image-container">
